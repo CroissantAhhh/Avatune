@@ -8,35 +8,35 @@ Base = declarative_base()
 
 user_medium_follows = db.Table(
     "user_medium_follows",
-    Base.metadata,
+    db.Model.metadata,
     db.Column("user_id", db.ForeignKey("users.id"), primary_key=True),
     db.Column("medium_id", db.ForeignKey("media.id"), primary_key=True)
 )
 
 user_artist_follows = db.Table(
     "user_artist_follows",
-    Base.metadata,
+    db.Model.metadata,
     db.Column("user_id", db.ForeignKey("users.id"), primary_key=True),
     db.Column("artist_id", db.ForeignKey("artists.id"), primary_key=True)
 )
 
 user_album_likes = db.Table(
     "user_album_likes",
-    Base.metadata,
+    db.Model.metadata,
     db.Column("user_id", db.ForeignKey("users.id"), primary_key=True),
     db.Column("album_id", db.ForeignKey("albums.id"), primary_key=True)
 )
 
 artists_albums_joins = db.Table(
     "artists_albums_joins",
-    Base.metadata,
+    db.Model.metadata,
     db.Column("artist_id", db.ForeignKey("artists.id"), primary_key=True),
     db.Column("album_id", db.ForeignKey("albums.id"), primary_key=True)
 )
 
 artists_tracks_joins = db.Table(
     "artists_tracks_joins",
-    Base.metadata,
+    db.Model.metadata,
     db.Column("artist_id", db.ForeignKey("artists.id"), primary_key=True),
     db.Column("track_id", db.ForeignKey("tracks.id"), primary_key=True)
 )
@@ -107,9 +107,9 @@ class Medium(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hashed_id = db.Column(db.String)
     title = db.Column(db.String)
-    media_image = db.Column(db.String(1000))
-    info_link = db.Column(db.String(1000))
-    description = db.Column(db.String(1000))
+    media_image = db.Column(db.Text)
+    info_link = db.Column(db.Text)
+    description = db.Column(db.Text)
 
     # Relationships
     medium_users = db.relationship("User", secondary=user_medium_follows, back_populates="user_media")
@@ -145,13 +145,13 @@ class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hashed_id = db.Column(db.String)
     name = db.Column(db.String)
-    artist_image = db.Column(db.String(1000))
-    bio = db.Column(db.String(1000))
+    artist_image = db.Column(db.Text)
+    bio = db.Column(db.Text)
 
     # Relationships
     artist_users = db.relationship("User", secondary=user_artist_follows, back_populates="user_artists")
-    artist_albums = db.relationship("Album", secondary=artists_albums_joins, back_populates="album_artist")
-    artist_tracks = db.relationship("Track", secondary=artists_tracks_joins, back_populates="track_artist")
+    artist_albums = db.relationship("Album", secondary=artists_albums_joins, back_populates="album_artists")
+    artist_tracks = db.relationship("Track", secondary=artists_tracks_joins, back_populates="track_artists")
 
     def to_dict(self):
         return {
@@ -183,7 +183,7 @@ class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hashed_id = db.Column(db.String)
     title = db.Column(db.String)
-    album_image = db.Column(db.String(1000))
+    album_image = db.Column(db.Text)
     medium_id = db.Column(db.Integer, db.ForeignKey("media.id"), nullable=False)
 
     # Relationships
@@ -223,8 +223,8 @@ class Track(db.Model):
     # Columns
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    track_image = db.Column(db.String(1000))
-    track_file = db.Column(db.String(1000))
+    track_image = db.Column(db.Text)
+    track_file = db.Column(db.Text)
     duration = db.Column(db.Integer)
     plays = db.Column(db.Integer)
     album_id = db.Column(db.Integer, db.ForeignKey("albums.id"), nullable=False)

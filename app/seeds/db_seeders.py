@@ -1,12 +1,52 @@
 from os import environ, name
-# from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash
 from app.models import db, User, Medium, Artist, Album, Track, Playlist, PlaylistLink, UserTrackPlays
 import datetime as dt
 from random import randint, choice, sample
 import string
-from seeds.media_data import media_data
-from seeds.album_data import albums_data
+from pathlib import Path
 import json
+
+media_data = [
+    { "name": "Haikyu!!", "bannerURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633810793/Haikyu%21%21/HaikyuBanner_bnitml.png", "infoLink": "https://myanimelist.net/anime/20583/Haikyuu", "description": "Haikyu!! is a Japanese manga series written and illustrated by Haruichi Furudate. The story follows Shōyō Hinata, a boy determined to become a great volleyball player despite his small stature." },
+    { "name": "My Hero Academia", "bannerURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633810874/My%20Hero%20Academia/MHABanner_xjn34b.jpg", "infoLink": "https://myanimelist.net/anime/31964/Boku_no_Hero_Academia", "description": "My Hero Academia is a Japanese superhero manga series written and illustrated by Kōhei Horikoshi. The story follows Izuku Midoriya, a boy born without superpowers in a world where they have become commonplace, but who still dreams of becoming a superhero himself."},
+    { "name": "Fire Emblem: Three Houses", "bannerURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633810655/Fire%20Emblem:%20Three%20Houses/FE3HBanner_gw85tx.jpg", "infoLink": "https://www.nintendo.com/games/detail/fire-emblem-three-houses-switch/", "description": "Fire Emblem: Three Houses is a tactical role-playing game developed by Intelligent Systems and Koei Tecmo for the Nintendo Switch and published worldwide by Nintendo."},
+    { "name": "Danganronpa", "bannerURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633810890/Danganronpa/danganronpaBanner_txgcsp.jpg", "infoLink": "http://danganronpa.us/", "description": "Danganronpa is a Japanese video game franchise created by Kazutaka Kodaka and developed and owned by Spike Chunsoft. The series surrounds a group of high school students who are forced into murdering each other by a bear named Monokuma. Gameplay features a mix of adventure, visual novel, and dating simulator elements."},
+    { "name": "Ace Attorney", "bannerURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634658328/Ace%20Attorney/Box_Front_ex2mua.jpg", "infoLink": "https://www.ace-attorney.com/", "description": "Ace Attorney is a series of adventure video game legal dramas developed by Capcom. The first entry in the series, Phoenix Wright: Ace Attorney, was released in 2001; since then, five further main series games, as well as various spin-offs and high-definition remasters for newer game consoles, have been released." },
+    { "name": "Pokemon", "bannerURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634839074/Pokemon/pokemonBanner_vartur.jpg", "infoLink": "https://www.pokemon.com/us/", "description": "An anime series based on the popular Game Boy game 'Pocket Monsters' in which children raise a pocket monster and train it to fight other monsters. In this show, Satoshi and his Pokemon, Pikachu, travel the land hoping to improve their skills and eventually become the grand champions."},
+    { "name": "Monster Hunter", "bannerURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1635108408/Monster%20Hunter/Screen_Shot_2021-10-24_at_1.46.21_PM_l9ce6g.png", "infoLink": "https://www.monsterhunter.com/", "description": "The games are primarily action role-playing games. The player takes the role of a Hunter, slaying or trapping large monsters across various landscapes as part of quests given to them by locals, with some quests involving the gathering of a certain item or items, which may put the Hunter at risk of facing various monsters. As part of its core gameplay loop, players use loot gained from slaying monsters, gathering resources, and quest rewards to craft improved weapons, armor, and other items that allow them to face more powerful monsters. All main series titles feature multiplayer (usually up to four players cooperatively), but can also be played single player."},
+    { "name": "Naruto", "bannerURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1635872773/Naruto/narutoImage_hqtsiu.jpg", "infoLink": "https://myanimelist.net/anime/20/Naruto", "description": "Naruto is a Japanese manga series written and illustrated by Masashi Kishimoto. It tells the story of Naruto Uzumaki, a young ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village." },
+]
+
+albums_data = [
+      { "name": "Haikyu!! Original Soundtrack Vol.1", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633811079/Haikyu%21%21/Original%20Soundtrack%20Vol%201/Cover_pjjinj.jpg", "artist": "Yuki Hayashi", "mediumId": 1},
+      { "name": "Haikyu!! Original Soundtrack Vol.2", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633811363/Haikyu%21%21/Original%20Soundtrack%20Vol%202/cover_at9bjm.jpg", "artist": "Yuki Hayashi", "mediumId": 1},
+      { "name": "Haikyu!! Second Season Original Soundtrack Vol.1", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633811914/Haikyu%21%21/Second%20Season%20Original%20Soundtrack%20Vol%201/img262_isp1cn.jpg", "artist": "Yuki Hayashi", "mediumId": 1},
+      { "name": "Haikyu!! Second Season Original Soundtrack Vol.2", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633814944/Haikyu%21%21/Second%20Season%20Original%20Soundtrack%20Vol%202/h2s2_zpkfn2.jpg", "artist": "Yuki Hayashi", "mediumId": 1},
+      { "name": "My Hero Academia Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633812164/My%20Hero%20Academia/Season%201%20Soundtrack/Cover_eum1j5.jpg", "artist": "Yuki Hayashi", "mediumId": 2},
+      { "name": "My Hero Academia 2nd Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633812748/My%20Hero%20Academia/Season%202%20Soundtrack/Cover_uftllj.jpg", "artist": "Yuki Hayashi", "mediumId": 2},
+      { "name": "Fire Emblem Three Houses Complete Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633817292/Fire%20Emblem:%20Three%20Houses/Cover_edf4kd.jpg", "artist": "Takeru Kanazaki/Hiroki Morishita/Rei Kondoh", "mediumId": 3},
+      { "name": "Danganronpa Trigger Happy Havoc Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633813259/Danganronpa/Trigger%20Happy%20Havoc/Cover_lzzx4r.jpg", "artist": "Masafumi Takada", "mediumId": 4},
+      { "name": "Haikyu!! Karasuno High School VS Shiratorizawa Academy Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634656717/Haikyu%21%21/Karasuno%20vs%20Shiratorizawa%20OST/Cover_mhbrex.jpg", "artist": "Yuki Hayashi", "mediumId": 1},
+      { "name": "Haikyu!! To The Top Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634657108/Haikyu%21%21/To%20the%20Top%21%20OST/Cover_egrsmg.jpg", "artist": "Yuki Hayashi", "mediumId": 1},
+      { "name": "Phoenix Wright: Ace Attorney Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634657896/Ace%20Attorney/Game%201/Disc_1_Front_vtn3d7.jpg", "artist": "Masakazu Sugimori", "mediumId": 5},
+      { "name": "Phoenix Wright: Ace Attorney - Justice for All - Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634658075/Ace%20Attorney/Game%202/Disc_2_Front_cva0lf.jpg", "artist": "Masakazu Sugimori", "mediumId": 5},
+      { "name": "Phoenix Wright: Ace Attorney - Trials and Tribulations - Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634658320/Ace%20Attorney/Game%203/Disc_3_Front_sqefry.jpg", "artist": "Noriyuki Iwadare", "mediumId": 5},
+      { "name": "My Hero Academia 3rd Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634660757/My%20Hero%20Academia/Season%203%20Soundtrack/Cover_hk04uo.jpg", "artist": "Yuki Hayashi", "mediumId": 2},
+      { "name": "My Hero Academia 4th Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634661090/My%20Hero%20Academia/Season%204%20Soundtrack/Cover_ja9etg.jpg", "artist": "Yuki Hayashi", "mediumId": 2},
+      { "name": "My Hero Academia 5th Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634838338/My%20Hero%20Academia/Season%205%20Soundtrack/cover_w907yk.jpg", "artist": "Yuki Hayashi", "mediumId": 2},
+      { "name": "Pokemon Sword & Pokemon Shield: Super Music Collection", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634663647/Pokemon/Sword-Shield/Cover_y525tr.png", "artist": "Minako Adachi/Go Ichinose", "mediumId": 6},
+      { "name": "Pokemon Diamond & Pokemon Pearl: Super Music Collection", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634662995/Pokemon/Diamond-Pearl/Cover_ddhg7n.png", "artist": "Junichi Masuda/Go Ichinose", "mediumId": 6},
+      { "name": "Monster Hunter: World Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634664624/Monster%20Hunter/Monster%20Hunter%20World/Cover_sqkabe.png", "artist": "Akihiko Narita/Yuko Komiyama", "mediumId": 7},
+      { "name": "Monster Hunter World: Iceborne Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634666012/Monster%20Hunter/Monster%20Hunter%20World%20-%20Iceborne/COVER_mpvmbk.jpg", "artist": "Akihiko Narita/Yuko Komiyama", "mediumId": 7},
+      { "name": "Monster Hunter: Hunting Music Ultimate Collection", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1635285727/Monster%20Hunter/Hunting%20Music%20Ultimate%20Collection/Cover_q2a3ot.jpg", "artist": "Capcom Sound Team", "mediumId": 7},
+      { "name": "Naruto Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634658424/Naruto/Naruto%201/Cover_nrtxl6.jpg", "artist": "Toshio Masuda", "mediumId": 8},
+      { "name": "Naruto Original Soundtrack II", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634658748/Naruto/Naruto%202/Cover_qm9obd.jpg", "artist": "Toshio Masuda", "mediumId": 8},
+      { "name": "Naruto Original Soundtrack III", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634658937/Naruto/Naruto%203/Cover_gbni3k.jpg", "artist": "Toshio Masuda", "mediumId": 8},
+      { "name": "Naruto Shippuden: Original Soundtrack", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634659892/Naruto/Naruto%20Shippuden%201/Cover_ntwyb4.jpg", "artist": "Yasuharu Takanashi", "mediumId": 8},
+      { "name": "Naruto Shippuden: Original Soundtrack II", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634660161/Naruto/Naruto%20Shippuden%202/Cover_wl6fnj.jpg", "artist": "Yasuharu Takanashi", "mediumId": 8},
+      { "name": "Naruto Shippuden: Original Soundtrack III", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634660403/Naruto/Naruto%20Shippuden%203/Cover_k0qoum.jpg", "artist": "Yasuharu Takanashi", "mediumId": 8},
+]
 
 def generate_hash_id():
     return ''.join(choice(string.ascii_letters + string.digits) for _ in range(20))
@@ -16,7 +56,10 @@ def seed_users():
     Seeds the users table.
     '''
     jason = User(
-        username='Jason Zhou', email='jasonzhou8597@gmail.com', password='jasonzhou2')
+        username='Jason Zhou',
+        email='jasonzhou8597@gmail.com',
+        password='jasonzhou2',
+        recently_played = "")
 
     db.session.add(jason)
 
@@ -54,7 +97,7 @@ def seed_artists():
         hashed_id = generate_hash_id(),
         name = 'Masafumi Takada',
         artist_image = "https://res.cloudinary.com/dmtj0amo0/image/upload/v1639762741/Masafumi_Takada_uezvdl.jpg",
-        bio = "Masafumi Takada is a japanese video game music composer. He is well known for his versatility in music with styles ranging from rock, pop, ballad, techno and jazz. He started learning music at the age of three on a keyboard called the Electrone by Yamaha. He then took the tuba in a brass band in high school. Takada joined the video game industry after obtaining his degree in music and worked on his first game called 2Tax Gold. His most notable work is the soundtrack composition for Grasshopper Manufacture games such as Killer7 and No More Heroes. He often partners up with musician and guitarist Jun Fukuda. He left Grasshopper in 2010 to join Shinji Mikami (creator of Resident Evil)'s company called Tango Gameworks. Takada has also composed soundtracks for God Hand, Resident Evil: The Umbrella Chronicles, Super Smash Bros. Brawl and beatmania IIDX. He left Grasshopper sometime in 2010 and is now working with Shinji Mikami's company Tango Gameworks. He also founded his own company called Sound Prestige. His favorite own soundtrack is Killer7."
+        bio = "Masafumi Takada is a japanese video game music composer. He is well known for his versatility in music with styles ranging from rock, pop, ballad, techno and jazz. He started learning music at the age of three on a keyboard called the Electrone by Yamaha. He then took the tuba in a brass band in high school. Takada joined the video game industry after obtaining his degree in music and worked on his first game called 2Tax Gold. His most notable work is the soundtrack composition for Grasshopper Manufacture games such as Killer7 and No More Heroes."
     )
     db.session.add(masafumi_takada)
 
@@ -165,6 +208,9 @@ def seed_artists():
     db.session.commit()
 
 def seed_albums():
+    '''
+    Seeds the albums table.
+    '''
     for album_data in albums_data:
         new_album = Album(
             hashed_id = generate_hash_id(),
@@ -173,6 +219,7 @@ def seed_albums():
             medium_id = int(album_data["mediumId"])
         )
         db.session.add(new_album)
+        db.session.commit()
         album_artists = album_data["artist"].split("/")
         for album_artist in album_artists:
             artist_instance = Artist.query.filter(Artist.name == album_artist).one()
@@ -181,4 +228,65 @@ def seed_albums():
     db.session.commit()
 
 def seed_tracks():
-    pass
+    '''
+    Seeds the tracks table.
+    '''
+    paths = list(Path('app/seeds/trackData').glob('**/*.json'))
+    for path in paths:
+        with open(path) as json_file:
+            tracks = json.load(json_file)
+            for track in tracks:
+                new_track = Track(
+                    title = track["name"],
+                    track_image = track["trackImageURL"],
+                    track_file = track["fileURL"],
+                    duration = 1000,
+                    plays = randint(1000, 100000),
+                    album_id = track["albumId"],
+                    medium_id = track["mediumId"],
+                )
+                db.session.add(new_track)
+                db.session.commit()
+
+                track_album = Album.query.get(new_track.album_id)
+                for album_artist in track_album.album_artists:
+                    new_track.track_artists.append(album_artist)
+                    album_artist.artist_tracks.append(new_track)
+
+                db.session.commit()
+
+def seed_playlists():
+    '''
+    Seeds the playlists table.
+    '''
+    jason_yoursongs = Playlist(
+        hashed_id = generate_hash_id(),
+        title = 'Your Songs',
+        user_id = 1,
+    )
+
+    db.session.add(jason_yoursongs)
+    db.session.commit()
+
+def seed_all():
+    '''
+    Seeds all models.
+    '''
+    seed_users()
+    seed_media()
+    seed_artists()
+    seed_albums()
+    seed_tracks()
+    seed_playlists()
+
+def undo_all():
+    '''
+    Undos all seeded models.
+    '''
+    db.session.execute(f'TRUNCATE playlists RESTART IDENTITY CASCADE;')
+    db.session.execute(f'TRUNCATE tracks RESTART IDENTITY CASCADE;')
+    db.session.execute(f'TRUNCATE albums RESTART IDENTITY CASCADE;')
+    db.session.execute(f'TRUNCATE artists RESTART IDENTITY CASCADE;')
+    db.session.execute(f'TRUNCATE media RESTART IDENTITY CASCADE;')
+    db.session.execute(f'TRUNCATE users RESTART IDENTITY CASCADE;')
+    db.session.commit()
