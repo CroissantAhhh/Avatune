@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import db, User, Track, UserTrackPlays
+from app.models import db, User, Track, Playlist, PlaylistLink, UserTrackPlays
+import datetime as dt
 
 track_routes = Blueprint('tracks', __name__)
 
@@ -17,6 +18,7 @@ def tracks_by_user(id):
     user_liked_tracks = user.user_tracks
     return { "tracks": [track.to_dict() for track in user_liked_tracks] }
 
+# Helper function for the search algorithm
 def terms_matched(title, search_term):
     matches = []
     search_terms = search_term.split(" ")
@@ -34,6 +36,7 @@ def terms_matched(title, search_term):
 
     return len(matches)
 
+# Finds all tracks that satisfy the search query, sorted from most fitting to least fitting
 def find_searched_tracks(track_search):
     search_terms = track_search.split(" ")
     track_matches = []
@@ -74,3 +77,23 @@ def play_track(user_id, track_id):
     track = Track.query.get(track_id)
     track.plays += 1
     db.session.commit()
+
+@track_routes.route('/addPlaylist/<int:playlist_id>/<int:track_id>', methods=['POST'])
+def add_track_playlist(playlist_id, track_id):
+    new_pll = PlaylistLink(
+        track_id = track_id,
+        playlist_id = playlist_id,
+        time_added = dt.datetime.now()
+    )
+    db.session.add(new_pll)
+    db.session.commit()
+    plls = PlaylistLink.query.filter(PlaylistLink.playlist_id == playlist_id).all()
+    return { "tracks": [Track.query.get(pll.track_id).to_dict() for pll in plls]}
+
+@track_routes.route('/removePlaylist/<int:playlist_id>/<int:track_id>', methods=['DELETE'])
+def remove_track_playlist(playlist_id, track_id):
+    pll = PlaylistLink.query.filter(PlaylistLink.playlist_id == playlist_id and PlaylistLink.track_id == track_id).one()
+    db.session.delete(pll)
+    db.session.commit()
+    plls = PlaylistLink.query.filter(PlaylistLink.playlist_id == playlist_id).all()
+    return { "tracks": [Track.query.get(pll.track_id).to_dict() for pll in plls]}

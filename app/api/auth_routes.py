@@ -1,8 +1,12 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import db, User, Playlist
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+import string
+from random import choice
+
+from app.seeds.db_seeders import generate_hash_id
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -53,6 +57,8 @@ def logout():
     logout_user()
     return {'message': 'User logged out'}
 
+def generate_hash_id():
+    return ''.join(choice(string.ascii_letters + string.digits) for _ in range(20))
 
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
@@ -68,6 +74,13 @@ def sign_up():
             password=form.data['password']
         )
         db.session.add(user)
+        db.session.commit()
+        new_user_playlist = Playlist(
+            hashed_id = generate_hash_id(),
+            title = "Your Songs",
+            user_id = user.id,
+        )
+        db.session.add(new_user_playlist)
         db.session.commit()
         login_user(user)
         return user.to_dict()

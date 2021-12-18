@@ -20,6 +20,12 @@ user_artist_follows = db.Table(
     db.Column("artist_id", db.ForeignKey("artists.id"), primary_key=True)
 )
 
+user_playlist_follows = db.Table(
+    "user_playlist_follows",
+    db.Model.metadata,
+    db.Column("user_id", db.ForeignKey("users.id"), primary_key=True),
+    db.Column("playlist_id", db.ForeignKey("playlists.id"), primary_key=True)
+)
 user_album_likes = db.Table(
     "user_album_likes",
     db.Model.metadata,
@@ -49,6 +55,7 @@ artists_tracks_joins = db.Table(
 #
 # Relationships:
 #   - One user has many playlists
+#   - Many users can follow many playlists
 #   - One user has many user-track plays
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -62,6 +69,7 @@ class User(db.Model, UserMixin):
 
     # Relationships
     user_playlists = db.relationship("Playlist", back_populates="playlist_user")
+    user_followed_playlists = db.relationship("Playlist", secondary=user_playlist_follows, back_populates="playlist_following_users")
     user_utps = db.relationship("UserTrackPlays", back_populates="utp_user")
     user_media = db.relationship("Medium", secondary=user_medium_follows, back_populates="medium_users")
     user_artists = db.relationship("Artist", secondary=user_artist_follows, back_populates="artist_users")
@@ -258,6 +266,7 @@ class Track(db.Model):
 #
 # Relationships:
 #   - Many playlists belong to one user
+#   - Many playlists can be followed by many users
 #   - One playlist has many playlist links
 class Playlist(db.Model):
     __tablename__ = 'playlists'
@@ -270,11 +279,13 @@ class Playlist(db.Model):
 
     # Relationships
     playlist_user = db.relationship("User", back_populates="user_playlists")
+    playlist_following_users = db.relationship("User", secondary=user_playlist_follows, back_populates="user_followed_playlists")
     playlist_plls = db.relationship("PlaylistLink", back_populates="pll_playlist")
 
     def to_dict(self):
         return {
             'id': self.id,
+            'hashedId': self.hashed_id,
             'title': self.title,
             'userId': self.user_id,
         }

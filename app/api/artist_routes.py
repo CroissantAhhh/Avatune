@@ -17,6 +17,7 @@ def artists_by_user(id):
     user_liked_artists = user.user_artists
     return { "artists": [artist.to_dict() for artist in user_liked_artists] }
 
+# Helper function for the search algorithm
 def terms_matched(title, search_term):
     matches = []
     search_terms = search_term.split(" ")
@@ -34,6 +35,7 @@ def terms_matched(title, search_term):
 
     return len(matches)
 
+# Finds all artists that satisfy the search query, sorted from most fitting to least fitting
 def find_searched_artists(artist_search):
     search_terms = artist_search.split(" ")
     artist_matches = []
