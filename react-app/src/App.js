@@ -5,8 +5,19 @@ import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import UsersList from './components/UsersList';
-import User from './components/User';
+import PageContainer from './pages/PageContainer';
+import HomePage from './pages/HomePage';
+import AlbumPage from './pages/AlbumPage';
+import ArtistPage from './pages/ArtistPage';
+import FollowersPage from './pages/FollowersPage';
+import FollowingPage from './pages/FollowingPage';
+import MediumPage from './pages/MediumPage';
+import PlaylistPage from './pages/PlaylistPage';
+import SearchResultsPage from './pages/SearchResultsPage';
+import SpecificResultsPage from './pages/SpecificResultsPage';
+import SplashPage from './pages/SplashPage';
+import UserPage from './pages/UserPage';
+import NotFoundPage from './pages/NotFoundPage';
 import { authenticate } from './store/session';
 
 function App() {
@@ -28,21 +39,39 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
-        <Route path='/login' exact={true}>
-          <LoginForm />
+        <Route path='/' exact={true}>
+          <SplashPage />
         </Route>
-        <Route path='/sign-up' exact={true}>
-          <SignUpForm />
+        <ProtectedRoute path='/home'>
+          <PageContainer page={<HomePage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/user/:userHash' exact={true}>
+          <PageContainer page={<UserPage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/user/:userHash/followers'>
+          <PageContainer page={<FollowersPage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/user/:userHash/following'>
+          <PageContainer page={<FollowingPage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/media/:mediaHash'>
+          <PageContainer page={<MediumPage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/artist/:artistHash'>
+          <PageContainer page={<ArtistPage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/album/:albumHash'>
+          <PageContainer page={<AlbumPage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/search/:searchQuery' exact={true}>
+          <PageContainer page={<SearchResultsPage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/search/:searchQuery/:category'>
+          <PageContainer page={<SpecificResultsPage />} />
+        </ProtectedRoute>
+        <Route>
+          <NotFoundPage />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId' exact={true} >
-          <User />
-        </ProtectedRoute>
-        <ProtectedRoute path='/' exact={true} >
-          <h1>My Home Page</h1>
-        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import db, User, Track, Playlist, PlaylistLink, UserTrackPlays
+from app.models import db, User, Artist, Track, Playlist, PlaylistLink, UserTrackPlays
 import datetime as dt
 
 track_routes = Blueprint('tracks', __name__)
@@ -54,11 +54,23 @@ def tracks_search(track_search):
 def tracks_full_search(track_search):
     return { "tracks": find_searched_tracks(track_search) }
 
-@track_routes.route('/mostPlayed/<int:user_id>')
+@track_routes.route('/userMost/<int:user_id>')
 def user_most_played(user_id):
     user_track_plays = UserTrackPlays.query.filter(UserTrackPlays.user_id == user_id).all()
     user_track_plays.sort(reverse=True, key=lambda x: x.count)
     return { "tracks": [track.to_dict() for track in user_track_plays[0:10]] }
+
+@track_routes.route('/mediumMost/<int:medium_id>')
+def medium_most_played(medium_id):
+    medium_most = Track.query.filter(Track.medium_id == medium_id).all()
+    medium_most.sort(reverse=True, key=lambda x: x.plays)
+    return { "tracks": [track.to_dict() for track in medium_most[0:10]] }
+
+@track_routes.route('/artistMost/<int:artist_id>')
+def artist_most_played(artist_id):
+    artist_most = Track.query.filter(Artist.query.get(artist_id) in Track.track_artists).all()
+    artist_most.sort(reverse=True, key=lambda x: x.plays)
+    return { "tracks": [track.to_dict() for track in artist_most[0:10]] }
 
 @track_routes.route('/playTrack/<int:user_id>/<int:track_id>', methods=['POST'])
 def play_track(user_id, track_id):
@@ -76,6 +88,19 @@ def play_track(user_id, track_id):
 
     track = Track.query.get(track_id)
     track.plays += 1
+
+    user = User.query.get(user_id)
+    track_id_string = str(track_id)
+    user_recently_played = user.recently_played
+    if user_recently_played == "":
+        user.recently_played = track_id_string
+    else:
+        recent_tracks = user_recently_played.split("-")
+        if track_id_string in recent_tracks:
+            recent_tracks.remove(track_id_string)
+        recent_tracks.insert(0, track_id_string)
+        if len(recent_tracks) > 5:
+            recent_tracks.pop(5)
     db.session.commit()
 
 @track_routes.route('/addPlaylist/<int:playlist_id>/<int:track_id>', methods=['POST'])
