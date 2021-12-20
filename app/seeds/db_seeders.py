@@ -56,6 +56,7 @@ def seed_users():
     Seeds the users table.
     '''
     jason = User(
+        hashed_id = generate_hash_id(),
         username='Jason Zhou',
         email='jasonzhou8597@gmail.com',
         password='jasonzhou2',
@@ -65,11 +66,11 @@ def seed_users():
 
     db.session.commit()
 
-
 def seed_media():
     '''
     Seeds the media table.
     '''
+    jason = User.query.get(1)
     for medium_data in media_data:
         new_medium = Medium(
             hashed_id = generate_hash_id(),
@@ -79,12 +80,18 @@ def seed_media():
             description = medium_data["description"]
         )
         db.session.add(new_medium)
+        db.session.commit()
+        probability = randint(1, 100)
+        if probability <= 50:
+            jason.user_media.append(new_medium)
+            new_medium.medium_users.append(jason)
     db.session.commit()
 
 def seed_artists():
     '''
     Seeds the artists table.
     '''
+    jason = User.query.get(1)
     yuki_hayashi = Artist(
         hashed_id = generate_hash_id(),
         name = 'Yuki Hayashi',
@@ -92,6 +99,9 @@ def seed_artists():
         bio = "Yuki Hayashi was born in Kyoto, Japan 1980. A former male rhythmic gymnast, selecting music as a performer led him to the world of accompaniment music. Although he had no formal musical training, he started composing music on his own while in university. After graduating he learned the basics of track making from Hideo Kobayashi, and began to produce accompaniment music for competitive dance in earnest. His unique musical style came about from his experience as a former dance, having taken in music from various genres, as well as his particular attention to a sense of unity between the music and the images."
     )
     db.session.add(yuki_hayashi)
+    db.session.commit()
+    jason.user_artists.append(yuki_hayashi)
+    yuki_hayashi.artist_users.append(jason)
 
     masafumi_takada = Artist(
         hashed_id = generate_hash_id(),
@@ -100,6 +110,9 @@ def seed_artists():
         bio = "Masafumi Takada is a japanese video game music composer. He is well known for his versatility in music with styles ranging from rock, pop, ballad, techno and jazz. He started learning music at the age of three on a keyboard called the Electrone by Yamaha. He then took the tuba in a brass band in high school. Takada joined the video game industry after obtaining his degree in music and worked on his first game called 2Tax Gold. His most notable work is the soundtrack composition for Grasshopper Manufacture games such as Killer7 and No More Heroes."
     )
     db.session.add(masafumi_takada)
+    db.session.commit()
+    jason.user_artists.append(masafumi_takada)
+    masafumi_takada.artist_users.append(jason)
 
     takeru_kanazaki = Artist(
         hashed_id = generate_hash_id(),
@@ -156,6 +169,9 @@ def seed_artists():
         bio = "Gō Ichinose (Japanese: 一之瀬剛) is a Japanese video game composer best known for his work on the Pokémon series. Ichinose joined Game Freak since he wanted to acquire some career qualifications. At first, he worked there as a programmer and planner, but he soon worked full-time on composition. Junichi Masuda brought him to help with the soundtrack of Pokémon Gold and Silver. He has been credited as a composer in all of the core series games up to Pokémon Black 2 and White 2. He has also composed for other Game Freak titles such as Drill Dozer and Pocket Card Jockey. Ichinose also worked on sound effects on Pokémon FireRed and LeafGreen and Pokémon Emerald, and designed the Pokémon cries of Pokémon Diamond and Pearl, Pokémon Platinum, Pokémon HeartGold and SoulSilver, Pokémon Black and White, and Pokémon Black 2 and White 2. After Pokémon Black 2 and White 2, Gō Ichinose took a break from Pokémon to work on Pocket Card Jockey. He returned in Pokémon Sun and Moon."
     )
     db.session.add(go_ichinose)
+    db.session.commit()
+    jason.user_artists.append(go_ichinose)
+    go_ichinose.artist_users.append(jason)
 
     junichi_masuda = Artist(
         hashed_id = generate_hash_id(),
@@ -196,6 +212,9 @@ def seed_artists():
         bio = "Toshio Masuda (増田 俊郎, Masuda Toshio, born October 28, 1959) is a Japanese composer. He has composed and synthesized scores for several Japanese television shows and animated series. Masuda is perhaps best known as the composer of the 2002 hit anime series Naruto where he combined traditional instruments like the shamisen and shakuhachi together with guitar, drums, bass, piano and other keyboard instruments along with chanting."
     )
     db.session.add(toshio_masuda)
+    db.session.commit()
+    jason.user_artists.append(toshio_masuda)
+    toshio_masuda.artist_users.append(jason)
 
     yasuharu_takanashi = Artist(
         hashed_id = generate_hash_id(),
@@ -204,6 +223,9 @@ def seed_artists():
         bio = "Yasuharu Takanashi (高梨 康治, Takanashi Yasuharu, born April 13, 1963) is a prolific Japanese composer and arranger for anime and video game series. His anime composition credits include Beyblade G-Revolution, Hell Girl, Ikki Tousen, Naruto Shippuden, Fairy Tail, Shiki, and Sailor Moon Crystal. He also composed on four Pretty Cure series: Fresh Pretty Cure!, HeartCatch PreCure!, Suite PreCure, and Smile PreCure!, as well as their related films, some of which were with composer Naoki Sato. Game music compositions include Genji: Dawn of the Samurai, Genji: Days of the Blade and J-Stars Victory VS. He also composed theme music for Pride Fighting Championships and Ultraman Max.",
     )
     db.session.add(yasuharu_takanashi)
+    db.session.commit()
+    jason.user_artists.append(yasuharu_takanashi)
+    yasuharu_takanashi.artist_users.append(jason)
 
     db.session.commit()
 
@@ -211,6 +233,7 @@ def seed_albums():
     '''
     Seeds the albums table.
     '''
+    jason = User.query.get(1)
     for album_data in albums_data:
         new_album = Album(
             hashed_id = generate_hash_id(),
@@ -225,6 +248,11 @@ def seed_albums():
             artist_instance = Artist.query.filter(Artist.name == album_artist).one()
             new_album.album_artists.append(artist_instance)
             artist_instance.artist_albums.append(new_album)
+
+        probability = randint(1, 100)
+        if probability <= 40:
+            jason.user_albums.append(new_album)
+            new_album.album_users.append(jason)
     db.session.commit()
 
 def seed_tracks():
@@ -268,6 +296,20 @@ def seed_playlists():
     db.session.add(jason_yoursongs)
     db.session.commit()
 
+def seed_utps():
+    '''
+    Seeds the usertrackplays table.
+    '''
+    all_tracks = Track.query.all()
+    for track in all_tracks:
+        new_utp = UserTrackPlays(
+            track_id = track.id,
+            user_id = 1,
+            count = randint(50, 300)
+        )
+        db.session.add(new_utp)
+    db.session.commit()
+
 def seed_all():
     '''
     Seeds all models.
@@ -278,11 +320,13 @@ def seed_all():
     seed_albums()
     seed_tracks()
     seed_playlists()
+    seed_utps()
 
 def undo_all():
     '''
     Undos all seeded models.
     '''
+    db.session.execute(f'TRUNCATE usertrackplays RESTART IDENTITY CASCADE;')
     db.session.execute(f'TRUNCATE playlists RESTART IDENTITY CASCADE;')
     db.session.execute(f'TRUNCATE tracks RESTART IDENTITY CASCADE;')
     db.session.execute(f'TRUNCATE albums RESTART IDENTITY CASCADE;')

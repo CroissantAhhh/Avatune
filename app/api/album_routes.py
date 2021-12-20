@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User, Album
+from app.models import db, User, Album, Artist
 
 album_routes = Blueprint('albums', __name__)
 
@@ -9,13 +9,27 @@ def album_by_id(album_id):
     album = Album.query.get(album_id)
     return { "albums": album.to_dict() }
 
+@album_routes.route('/latest')
+def latest_album():
+    all_albums = Album.query.all()
+    return { "albums": all_albums[-1].to_dict() }
 
 @album_routes.route('/byUser/<int:user_id>')
 @login_required
-def albums_by_user(id):
-    user = User.query.get(id)
+def albums_by_user(user_id):
+    user = User.query.get(user_id)
     user_liked_albums = user.user_albums
     return { "albums": [album.to_dict() for album in user_liked_albums] }
+
+@album_routes.route('/byMedia/<int:medium_id>')
+@login_required
+def albums_by_media(medium_id):
+    return { "albums": [album.to_dict() for album in Album.query.filter(Album.medium_id == medium_id).all()] }
+
+@album_routes.route('/byArtist/<int:artist_id>')
+@login_required
+def albums_by_artist(artist_id):
+    return { "albums": [album.to_dict() for album in Album.query.filter(Artist.query.get(artist_id) in Album.album_artists).all()] }
 
 def terms_matched(title, search_term):
     matches = []
@@ -50,3 +64,13 @@ def albums_search(album_search):
 @album_routes.route('/fullSearch/<album_search>')
 def albums_full_search(album_search):
     return { "albums": find_searched_albums(album_search) }
+
+@album_routes.route('/like', methods=['POST'])
+def like_album():
+    data = request.json
+    user = User.query.get(data["userId"])
+    album = Album.query.get(data["albumId"])
+    user.user_albums.append(album)
+    album.album_users.append(user)
+    db.session.commit()
+    return { "albums": album }

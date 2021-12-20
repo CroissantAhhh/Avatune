@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
-import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PageContainer from './pages/PageContainer';
 import HomePage from './pages/HomePage';
@@ -37,10 +36,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
       <Switch>
         <Route path='/' exact={true}>
           <SplashPage />
+        </Route>
+        <Route path='/login'>
+          <LoginForm />
         </Route>
         <ProtectedRoute path='/home'>
           <PageContainer page={<HomePage />} />

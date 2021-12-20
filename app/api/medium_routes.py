@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import db, User, Medium
+from app.models import db, User, Medium, UserTrackPlays
 
 media_routes = Blueprint('media', __name__)
 
@@ -12,10 +12,30 @@ def medium_by_id(medium_id):
 
 @media_routes.route('/byUser/<int:user_id>')
 @login_required
-def medium_by_user(id):
-    user = User.query.get(id)
+def medium_by_user(user_id):
+    user = User.query.get(user_id)
     user_liked_media = user.user_media
     return { "media": [medium.to_dict() for medium in user_liked_media] }
+
+# Calculates the total number of plays for all songs in a medium
+def sum_track_plays(user_id, medium_id):
+    medium = Medium.query.get(medium_id)
+    play_count = 0
+    for track in medium.medium_tracks:
+        utp = UserTrackPlays.query.filter(UserTrackPlays.user_id == user_id and UserTrackPlays.track_id == track.id)
+        play_count += utp.count
+    return play_count
+
+@media_routes.route('/byUserMost/<int:user_id>')
+@login_required
+def medium_by_user_most(user_id):
+    user = User.query.get(user_id)
+    user_media = user.user_media
+    if len(user_media) <= 5:
+        return { "media": [medium.to_dict() for medium in user_media] }
+    else:
+        user_media.sort(reverse=True, key=lambda x: sum_track_plays(user_id, x.id))
+        return { "media": [medium.to_dict() for medium in user_media[0:5]] }
 
 def terms_matched(title, search_term):
     matches = []

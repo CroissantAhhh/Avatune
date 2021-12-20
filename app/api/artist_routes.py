@@ -12,8 +12,8 @@ def artist_by_id(artist_id):
 
 @artist_routes.route('/byUser/<int:user_id>')
 @login_required
-def artists_by_user(id):
-    user = User.query.get(id)
+def artists_by_user(user_id):
+    user = User.query.get(user_id)
     user_liked_artists = user.user_artists
     return { "artists": [artist.to_dict() for artist in user_liked_artists] }
 

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import db, User, Track, Playlist
+from app.models import db, User, Track, Playlist, PlaylistLink, UserTrackPlays
 import string
 from random import choice
 
@@ -11,11 +11,32 @@ def playlist_by_id(playlist_id):
     playlist = Playlist.query.get(playlist_id)
     return { "playlists": playlist.to_dict() }
 
+# Calculates the total number of plays for all songs in a playlist, divided by
+# the number of songs. This is to calculate how often a user listens to a playlist
+def average_track_plays(user_id, playlist_id):
+    playlist = Playlist.query.get(playlist_id)
+    playlist_links = PlaylistLink.query.filter(PlaylistLink.playlist_id == playlist.id).all()
+    play_count = 0
+    for pll in playlist_links:
+        utp = UserTrackPlays.query.filter(UserTrackPlays.user_id == user_id and UserTrackPlays.track_id == pll.track_id).one()
+        play_count += utp.count
+    return ( play_count / len(playlist_links) )
+
+@playlist_routes.route('/byUserMost/<int:user_id>')
+@login_required
+def playlists_by_user_most(user_id):
+    user = User.query.get(user_id)
+    user_owned_playlists = user.user_playlists
+    if len(user_owned_playlists) <= 5:
+        return { "playlists": [playlist.to_dict() for playlist in user_owned_playlists] }
+    else:
+        user_owned_playlists.sort(reverse=True, key=lambda x: average_track_plays(user_id, x.id))
+        return { "playlists": [playlist.to_dict() for playlist in user_owned_playlists[0:5]] }
 
 @playlist_routes.route('/byUser/<int:user_id>')
 @login_required
-def playlists_by_user(id):
-    user = User.query.get(id)
+def playlists_by_user(user_id):
+    user = User.query.get(user_id)
     user_owned_playlists = user.user_playlists
     user_followed_playlists = user.user_followed_playlists
     user_playlists = user_owned_playlists + user_followed_playlists

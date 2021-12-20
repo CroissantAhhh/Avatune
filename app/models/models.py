@@ -234,7 +234,7 @@ class Album(db.Model):
 #   - Many tracks belong to one medium
 #   - Many tracks belong to many artist
 #   - Many tracks belong to one album
-#   - One track has many playlist links
+#   - Many tracks have many playlist links
 #   - One track has many user-track plays
 class Track(db.Model):
     __tablename__ = 'tracks'
