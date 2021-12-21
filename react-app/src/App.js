@@ -40,47 +40,49 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path='/' exact={true}>
-          <SplashPage />
-        </Route>
-        <Route path='/login'>
-          <LoginForm />
-        </Route>
-        <ProtectedRoute path='/home'>
-          <PageContainer page={<HomePage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/user/:userHash' exact={true}>
-          <PageContainer page={<UserPage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/user/:userHash/followers'>
-          <PageContainer page={<FollowersPage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/user/:userHash/following'>
-          <PageContainer page={<FollowingPage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/medium/:mediumHash'>
-          <PageContainer page={<MediumPage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/artist/:artistHash'>
-          <PageContainer page={<ArtistPage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/album/:albumHash'>
-          <PageContainer page={<AlbumPage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/playlist/:playlistHash'>
-          <PageContainer page={<PlaylistPage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/search/:searchQuery' exact={true}>
-          <PageContainer page={<SearchResultsPage />} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/search/:searchQuery/:category'>
-          <PageContainer page={<SpecificResultsPage />} />
-        </ProtectedRoute>
-        <Route>
-          <NotFoundPage />
-        </Route>
-      </Switch>
+      <div className="window">
+        <Switch>
+          <Route path='/' exact={true}>
+            <SplashPage />
+          </Route>
+          <Route path='/login'>
+            <LoginForm />
+          </Route>
+          <ProtectedRoute path='/home'>
+            <PageContainer page={<HomePage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/user/:userHash' exact={true}>
+            <PageContainer page={<UserPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/user/:userHash/followers'>
+            <PageContainer page={<FollowersPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/user/:userHash/following'>
+            <PageContainer page={<FollowingPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/medium/:mediumHash'>
+            <PageContainer page={<MediumPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/artist/:artistHash'>
+            <PageContainer page={<ArtistPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/album/:albumHash'>
+            <PageContainer page={<AlbumPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/playlist/:playlistHash'>
+            <PageContainer page={<PlaylistPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/search/:searchQuery' exact={true}>
+            <PageContainer page={<SearchResultsPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/search/:searchQuery/:category'>
+            <PageContainer page={<SpecificResultsPage />} />
+          </ProtectedRoute>
+          <Route>
+            <NotFoundPage />
+          </Route>
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }

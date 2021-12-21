@@ -1,1 +1,37 @@
 /* TODO Add site wide styles */
+@font-face {
+    font-family: Gotham;
+    src: url(https://res.cloudinary.com/dmtj0amo0/raw/upload/v1634337186/Gotham-Bold_ump0rd.otf)
+}
+
+html {
+    font-family: Gotham;
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+.window {
+    height: max-content;
+}
+
+.l-horizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.l-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    height: 40px;
+    background-color: rgb(36, 36, 36);
+    border: 2px solid rgb(36, 36, 36);
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    color: rgb(1, 166, 196);
+}

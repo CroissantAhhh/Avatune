@@ -29,7 +29,7 @@ export default function TrackListing({ track, index, playlist }) {
     }
 
     return (
-        <div className="track-listing">
+        <div className="track-listing l-horizontal">
             <div className="track-index">
                 <p>{index}</p>
             </div>

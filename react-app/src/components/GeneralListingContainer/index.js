@@ -13,11 +13,11 @@ export default function GeneralListingContainer({ title, listings, compact, cate
     }, [])
 
     return (
-        <div className="listings-container">
+        <div className="listings-container l-vertical">
             <div className="title-container">
                 <p>{title}</p>
             </div>
-            <div className="listings-section">
+            <div className="listings-section l-horizontal">
                 {displayedListings.map(listing => (
                     <GeneralListing key={listing.hashedId} item={listing} category={category} />
                 ))}

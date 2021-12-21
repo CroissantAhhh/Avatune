@@ -67,7 +67,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    recently_played = db.Column(db.String(200))
 
     # Relationships
     user_playlists = db.relationship("Playlist", back_populates="playlist_user")
@@ -89,10 +88,10 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def get_followers(self):
-        return Follows.query.filter(Follows.followed_id == self.id).all()
+        return Follow.query.filter(Follow.followed_id == self.id).all()
 
     def get_followed(self):
-        return Follows.query.filter(Follows.follower_id == self.id).all()
+        return Follow.query.filter(Follow.follower_id == self.id).all()
 
     def to_dict(self):
         return {
@@ -100,7 +99,6 @@ class User(db.Model, UserMixin):
             'hashedId': self.hashed_id,
             'username': self.username,
             'email': self.email,
-            'recentlyPlayed': self.recently_played,
             'following': [user.followed_id for user in self.get_followed()],
             'followedBy': [user.follower_id for user in self.get_followers()]
         }
@@ -352,6 +350,7 @@ class UserTrackPlays(db.Model):
     track_id = db.Column(db.Integer, db.ForeignKey("tracks.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     count = db.Column(db.Integer)
+    last_played = db.Column(db.DateTime(timezone=False))
 
     # Relationships
     utp_track = db.relationship("Track", back_populates="track_utps")
@@ -362,7 +361,7 @@ class UserTrackPlays(db.Model):
 # Current Columns:
 #   - Follower ID: ID of the user that is following the followed
 #   - Followed ID: ID of the user that is being followed by the follower
-class Follows(db.Model):
+class Follow(db.Model):
     __tablename__ = 'follows'
 
     # Columns

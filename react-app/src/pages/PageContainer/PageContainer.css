@@ -1,0 +1,32 @@
+.main-page {
+    height: 100vh;
+}
+
+.main-page-upper {
+    margin-bottom: 100px;
+    height: calc(100vh - 100px);
+}
+
+.main-page-left {
+    height: 100%;
+    width: 200px;
+}
+
+.main-page-middle {
+    height: 100%;
+    width: calc(100vw - 400px);
+}
+
+.main-page-right {
+    height: 100%;
+    width: 200px;
+}
+
+.main-page-nav {
+    height: 100px;
+    width: 100%;
+}
+
+.main-page-content {
+    overflow-y: scroll;
+}

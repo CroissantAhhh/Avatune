@@ -1,6 +1,6 @@
 from os import environ, name
 from werkzeug.security import generate_password_hash
-from app.models import db, User, Medium, Artist, Album, Track, Playlist, PlaylistLink, UserTrackPlays
+from app.models import db, User, Medium, Artist, Album, Track, Playlist, PlaylistLink, UserTrackPlays, Follow
 import datetime as dt
 from random import randint, choice, sample
 import string
@@ -57,20 +57,229 @@ def seed_users():
     '''
     jason = User(
         hashed_id = generate_hash_id(),
-        username='Jason Zhou',
-        email='jasonzhou8597@gmail.com',
-        password='jasonzhou2',
-        recently_played = "")
+        username = 'Jason Zhou',
+        email = 'jasonzhou8597@gmail.com',
+        password = 'jasonzhou2',
+    )
 
     db.session.add(jason)
 
+    danp = User(
+        hashed_id = generate_hash_id(),
+        username = 'Dan Purcell',
+        email = 'danp@gmail.com',
+        password = 'password',
+    )
+    db.session.add(danp)
+
+    michaele = User(
+        hashed_id = generate_hash_id(),
+        username = 'Michael Ericson',
+        email = 'michaele@gmail.com',
+        password = 'password',
+    )
+    db.session.add(michaele)
+
+    nebyou = User(
+        hashed_id = generate_hash_id(),
+        username = 'Nebyou Ejigu',
+        email = 'daemail@gmail.com',
+        password = 'password',
+    )
+    db.session.add(nebyou)
+
+    annd = User(
+        hashed_id = generate_hash_id(),
+        username = 'Ann Donnelly',
+        email = 'annd@gmail.com',
+        password = 'password',
+    )
+    db.session.add(annd)
+
+    jamest = User(
+        hashed_id = generate_hash_id(),
+        username = 'James Thompson',
+        email = 'jamest@gmail.com',
+        password = 'password',
+    )
+    db.session.add(jamest)
+
+    pstory = User(
+        hashed_id = generate_hash_id(),
+        username = 'Patrick Story',
+        email = 'pstory@gmail.com',
+        password = 'password',
+    )
+    db.session.add(pstory)
+
+    willzill = User(
+        hashed_id = generate_hash_id(),
+        username = 'William Ziller',
+        email = 'williamz@gmail.com',
+        password = 'password',
+    )
+    db.session.add(willzill)
+
+    samo = User(
+        hashed_id = generate_hash_id(),
+        username = 'Sam Ortega',
+        email = 'samo@gmail.com',
+        password = 'password',
+    )
+    db.session.add(samo)
+
+    garrettm = User(
+        hashed_id = generate_hash_id(),
+        username = 'Garrett Middleton',
+        email = 'garrettm@gmail.com',
+        password = 'password',
+    )
+    db.session.add(garrettm)
+
+    ajabush = User(
+        hashed_id = generate_hash_id(),
+        username = 'AJ Abushaban',
+        email = 'ajabush@gmail.com',
+        password = 'password',
+    )
+    db.session.add(ajabush)
+
+    revan = User(
+        hashed_id = generate_hash_id(),
+        username = 'Revan Fajardo',
+        email = 'revanf@gmail.com',
+        password = 'password',
+    )
+    db.session.add(revan)
+
+    brandonl = User(
+        hashed_id = generate_hash_id(),
+        username = 'Brandon Laursen',
+        email = 'brandonl@gmail.com',
+        password = 'password',
+    )
+    db.session.add(brandonl)
+
+    adamg = User(
+        hashed_id = generate_hash_id(),
+        username = 'Adam Guan',
+        email = 'adamg@gmail.com',
+        password = 'password',
+    )
+    db.session.add(adamg)
+
+    kiaram = User(
+        hashed_id = generate_hash_id(),
+        username = 'Kiara Mendaros',
+        email = 'kiaram@gmail.com',
+        password = 'password',
+    )
+    db.session.add(kiaram)
+
+    nevinc = User(
+        hashed_id = generate_hash_id(),
+        username = 'Nevin Chow',
+        email = 'nevinc@gmail.com',
+        password = 'password',
+    )
+    db.session.add(nevinc)
+
+    jessiez = User(
+        hashed_id = generate_hash_id(),
+        username = 'Jessie Zhuo',
+        email = 'jessiez@gmail.com',
+        password = 'password',
+    )
+    db.session.add(jessiez)
+
+    howardc = User(
+        hashed_id = generate_hash_id(),
+        username = 'Howard Chang',
+        email = 'howardc@gmail.com',
+        password = 'password',
+    )
+    db.session.add(howardc)
+
+    davidr = User(
+        hashed_id = generate_hash_id(),
+        username = 'David Rogers',
+        email = 'davidr@gmail.com',
+        password = 'password',
+    )
+    db.session.add(davidr)
+
+    robk = User(
+        hashed_id = generate_hash_id(),
+        username = 'Rob Kauth',
+        email = 'robk@gmail.com',
+        password = 'password',
+    )
+    db.session.add(robk)
+
+    brads = User(
+        hashed_id = generate_hash_id(),
+        username = 'Brad Simpson',
+        email = 'brads@gmail.com',
+        password = 'password',
+    )
+    db.session.add(brads)
+
+    ish_chaudry = User(
+        hashed_id = generate_hash_id(),
+        username = 'Ish Chaudry',
+        email = 'ishc@gmail.com',
+        password = 'password',
+    )
+    db.session.add(ish_chaudry)
+
+    chrisw = User(
+        hashed_id = generate_hash_id(),
+        username = 'Chris Wu',
+        email = 'chrisw@gmail.com',
+        password = 'password',
+    )
+    db.session.add(chrisw)
+
+    dannyk = User(
+        hashed_id = generate_hash_id(),
+        username = 'Danny Kim',
+        email = 'dannyk@gmail.com',
+        password = 'password'
+    )
+    db.session.add(dannyk)
+
+    kwang = User(
+        hashed_id = generate_hash_id(),
+        username = 'Kwang Kim',
+        email = 'kwangk@gmail.com',
+        password = 'password',
+    )
+    db.session.add(kwang)
+
+    anish = User(
+        hashed_id = generate_hash_id(),
+        username = 'Anish Velagapudi',
+        email = 'anishv@gmail.com',
+        password = 'password'
+    )
+    db.session.add(anish)
     db.session.commit()
+    for user1 in User.query.all():
+        for user2 in User.query.all():
+            if user1.id != user2.id:
+                probability = randint(1, 100)
+                if probability <= 40:
+                    new_follow = Follow(
+                        follower_id = user1.id,
+                        followed_id = user2.id
+                    )
+                    db.session.add(new_follow)
+                    db.session.commit()
 
 def seed_media():
     '''
     Seeds the media table.
     '''
-    jason = User.query.get(1)
     for medium_data in media_data:
         new_medium = Medium(
             hashed_id = generate_hash_id(),
@@ -81,17 +290,20 @@ def seed_media():
         )
         db.session.add(new_medium)
         db.session.commit()
-        probability = randint(1, 100)
-        if probability <= 50:
-            jason.user_media.append(new_medium)
-            new_medium.medium_users.append(jason)
+        print(User.query.all())
+        for user in User.query.all():
+            print(user.id)
+            probability = randint(1, 100)
+            if probability <= 50:
+                user.user_media.append(new_medium)
+                new_medium.medium_users.append(user)
+                db.session.commit()
     db.session.commit()
 
 def seed_artists():
     '''
     Seeds the artists table.
     '''
-    jason = User.query.get(1)
     yuki_hayashi = Artist(
         hashed_id = generate_hash_id(),
         title = 'Yuki Hayashi',
@@ -100,8 +312,6 @@ def seed_artists():
     )
     db.session.add(yuki_hayashi)
     db.session.commit()
-    jason.user_artists.append(yuki_hayashi)
-    yuki_hayashi.artist_users.append(jason)
 
     masafumi_takada = Artist(
         hashed_id = generate_hash_id(),
@@ -111,8 +321,6 @@ def seed_artists():
     )
     db.session.add(masafumi_takada)
     db.session.commit()
-    jason.user_artists.append(masafumi_takada)
-    masafumi_takada.artist_users.append(jason)
 
     takeru_kanazaki = Artist(
         hashed_id = generate_hash_id(),
@@ -170,8 +378,6 @@ def seed_artists():
     )
     db.session.add(go_ichinose)
     db.session.commit()
-    jason.user_artists.append(go_ichinose)
-    go_ichinose.artist_users.append(jason)
 
     junichi_masuda = Artist(
         hashed_id = generate_hash_id(),
@@ -213,8 +419,6 @@ def seed_artists():
     )
     db.session.add(toshio_masuda)
     db.session.commit()
-    jason.user_artists.append(toshio_masuda)
-    toshio_masuda.artist_users.append(jason)
 
     yasuharu_takanashi = Artist(
         hashed_id = generate_hash_id(),
@@ -224,8 +428,13 @@ def seed_artists():
     )
     db.session.add(yasuharu_takanashi)
     db.session.commit()
-    jason.user_artists.append(yasuharu_takanashi)
-    yasuharu_takanashi.artist_users.append(jason)
+    for artist in Artist.query.all():
+        for user in User.query.all():
+            probability = randint(1, 100)
+            if probability <= 30:
+                user.user_artists.append(artist)
+                artist.artist_users.append(user)
+                db.session.commit()
 
     db.session.commit()
 
@@ -233,7 +442,6 @@ def seed_albums():
     '''
     Seeds the albums table.
     '''
-    jason = User.query.get(1)
     for album_data in albums_data:
         new_album = Album(
             hashed_id = generate_hash_id(),
@@ -248,23 +456,25 @@ def seed_albums():
             artist_instance = Artist.query.filter(Artist.title == album_artist).one()
             new_album.album_artists.append(artist_instance)
             artist_instance.artist_albums.append(new_album)
+            db.session.commit()
 
-        probability = randint(1, 100)
-        if probability <= 40:
-            jason.user_albums.append(new_album)
-            new_album.album_users.append(jason)
+        for user in User.query.all():
+            probability = randint(1, 100)
+            if probability <= 30:
+                user.user_albums.append(new_album)
+                new_album.album_users.append(user)
+                db.session.commit()
     db.session.commit()
 
 def random_date():
     current_time = dt.datetime.now()
-    seconds_random = randint(0, 16000000)
+    seconds_random = randint(0, 32000000)
     return current_time - dt.timedelta(seconds=seconds_random)
 
 def seed_tracks():
     '''
     Seeds the tracks table.
     '''
-    jason_songs = Playlist.query.get(1)
     paths = list(Path('app/seeds/trackData').glob('**/*.json'))
     for path in paths:
         with open(path) as json_file:
@@ -282,19 +492,11 @@ def seed_tracks():
                 db.session.add(new_track)
                 db.session.commit()
 
-                probability = randint(1, 100)
-                if probability <= 3:
-                    new_pll = PlaylistLink(
-                        track_id = new_track.id,
-                        playlist_id = 1,
-                        time_added = random_date(),
-                    )
-                    db.session.add(new_pll)
-
                 track_album = Album.query.get(new_track.album_id)
                 for album_artist in track_album.album_artists:
                     new_track.track_artists.append(album_artist)
                     album_artist.artist_tracks.append(new_track)
+                    db.session.commit()
 
                 db.session.commit()
 
@@ -302,27 +504,63 @@ def seed_playlists():
     '''
     Seeds the playlists table.
     '''
-    jason_yoursongs = Playlist(
-        hashed_id = generate_hash_id(),
-        title = 'Your Songs',
-        user_id = 1,
-    )
+    words1 = ['chill', 'hardcore', 'epic', 'hip', 'emotional', 'lit', 'positive', 'sad']
+    words2 = ['tunes', 'jams', 'bangers', 'vibes', 'songs', 'feelings', 'mix', 'classics', 'hits', 'mood']
+    all_users = User.query.all()
+    for user in all_users:
+        yoursongs = Playlist(
+            hashed_id = generate_hash_id(),
+            title = 'Your Songs',
+            user_id = user.id,
+        )
+        db.session.add(yoursongs)
+        db.session.commit()
+        for i in range(5):
+            new_pl = Playlist(
+                hashed_id = generate_hash_id(),
+                title = f"{choice(words1)} {choice(words2)}",
+                user_id = user.id
+            )
+            db.session.add(new_pl)
+        db.session.commit()
+        user_playlists = [playlist.id for playlist in user.user_playlists]
+        for track in Track.query.all():
+            probability = randint(1, 100)
+            if probability <= 30:
+                new_pll = PlaylistLink(
+                    track_id = track.id,
+                    playlist_id = choice(user_playlists),
+                    time_added = random_date(),
+                )
+                db.session.add(new_pll)
+                db.session.commit()
 
-    db.session.add(jason_yoursongs)
+    for user in all_users:
+        for playlist in Playlist.query.all():
+            if playlist.user_id != user.id and playlist.title != "Your Songs":
+                probability = randint(1, 100)
+                if probability <= 30:
+                    playlist.playlist_following_users.append(user)
+                    user.user_followed_playlists.append(playlist)
+                    db.session.commit()
     db.session.commit()
 
 def seed_utps():
     '''
     Seeds the usertrackplays table.
     '''
-    all_tracks = Track.query.all()
-    for track in all_tracks:
-        new_utp = UserTrackPlays(
-            track_id = track.id,
-            user_id = 1,
-            count = randint(50, 300)
-        )
-        db.session.add(new_utp)
+    for user in User.query.all():
+        for track in Track.query.all():
+            probability = randint(1, 100)
+            if probability <= 30:
+                new_utp = UserTrackPlays(
+                    track_id = track.id,
+                    user_id = user.id,
+                    count = randint(0, 200),
+                    last_played = random_date(),
+                )
+                db.session.add(new_utp)
+                db.session.commit()
     db.session.commit()
 
 def seed_all():
@@ -333,8 +571,8 @@ def seed_all():
     seed_media()
     seed_artists()
     seed_albums()
-    seed_playlists()
     seed_tracks()
+    seed_playlists()
     seed_utps()
 
 def undo_all():
