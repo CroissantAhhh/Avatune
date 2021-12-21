@@ -11,6 +11,11 @@ def playlist_by_id(playlist_id):
     playlist = Playlist.query.get(playlist_id)
     return { "playlists": playlist.to_dict() }
 
+@playlist_routes.route('/byHash/<playlist_hash>')
+def playlist_by_hash(playlist_hash):
+    playlist = Playlist.query.filter(Playlist.hashed_id == playlist_hash).one()
+    return { "playlists": [playlist.to_dict()]}
+
 # Calculates the total number of plays for all songs in a playlist, divided by
 # the number of songs. This is to calculate how often a user listens to a playlist
 def average_track_plays(user_id, playlist_id):

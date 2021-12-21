@@ -27,9 +27,18 @@ export const loadUserTracksMost = (userId) => async dispatch => {
 
     if (response.ok) {
         const tracks = await response.json();
-        dispatch(load(tracks.tracks))
-    }
-}
+        dispatch(load(tracks.tracks));
+    };
+};
+
+export const loadPlaylistTracks = (playlistId) => async dispatch => {
+    const response = await fetch(`/api/tracks/byPlaylist/${playlistId}`);
+
+    if (response.ok) {
+        const tracks = await response.json();
+        dispatch(load(tracks.tracks));
+    };
+};
 
 const trackReducer = (state = {}, action) => {
     switch (action.type) {

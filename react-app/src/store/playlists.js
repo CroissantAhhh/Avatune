@@ -27,7 +27,17 @@ export const loadUserPlaylistsMost = (userId) => async dispatch => {
 
     if (response.ok) {
         const playlists = await response.json();
-        dispatch(load(playlists.playlists))
+        dispatch(load(playlists.playlists));
+    };
+};
+
+export const loadPlaylistByHash = (playlistHash) => async dispatch => {
+    const response = await fetch(`/api/playlists/byHash/${playlistHash}`);
+
+    if (response.ok) {
+        const playlists = await response.json();
+        dispatch(load(playlists.playlists));
+        return playlists.playlists[0].id;
     }
 }
 

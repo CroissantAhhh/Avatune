@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify
 from flask_login import login_required
 from app.models import db, User, Artist, Track, Playlist, PlaylistLink, UserTrackPlays
 import datetime as dt
+import math
 
 track_routes = Blueprint('tracks', __name__)
 
@@ -17,6 +18,19 @@ def tracks_by_user(user_id):
     user = User.query.get(user_id)
     user_liked_tracks = user.user_tracks
     return { "tracks": [track.to_dict() for track in user_liked_tracks] }
+
+@track_routes.route('/byPlaylist/<int:playlist_id>')
+@login_required
+def tracks_by_playlist(playlist_id):
+    plls = PlaylistLink.query.filter(PlaylistLink.playlist_id == playlist_id).all()
+    playlist_tracks = []
+    for pll in plls:
+        next_track = Track.query.get(pll.track_id).to_dict()
+        print(next_track)
+        time_difference = dt.datetime.now() - pll.time_added
+        next_track['dateAdded'] = math.floor(time_difference.total_seconds())
+        playlist_tracks.append(next_track)
+    return { "tracks": playlist_tracks }
 
 # Helper function for the search algorithm
 def terms_matched(title, search_term):

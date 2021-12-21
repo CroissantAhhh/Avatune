@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
+import { loadUserPlaylists } from './store/playlists';
+
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -25,7 +28,8 @@ function App() {
 
   useEffect(() => {
     (async() => {
-      await dispatch(authenticate());
+      const userId = await dispatch(authenticate());
+      await dispatch(loadUserPlaylists(userId));
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -55,7 +59,7 @@ function App() {
         <ProtectedRoute path='/user/:userHash/following'>
           <PageContainer page={<FollowingPage />} />
         </ProtectedRoute>
-        <ProtectedRoute path='/media/:mediaHash'>
+        <ProtectedRoute path='/medium/:mediumHash'>
           <PageContainer page={<MediumPage />} />
         </ProtectedRoute>
         <ProtectedRoute path='/artist/:artistHash'>
@@ -63,6 +67,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/album/:albumHash'>
           <PageContainer page={<AlbumPage />} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/playlist/:playlistHash'>
+          <PageContainer page={<PlaylistPage />} />
         </ProtectedRoute>
         <ProtectedRoute path='/search/:searchQuery' exact={true}>
           <PageContainer page={<SearchResultsPage />} />

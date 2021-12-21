@@ -102,7 +102,7 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'recentlyPlayed': self.recently_played,
             'following': [user.followed_id for user in self.get_followed()],
-            'followedBy': [user.follower_id for user in self.get_followers()],
+            'followedBy': [user.follower_id for user in self.get_followers()]
         }
 
 # Medium: referring to the anime or video game series of the soundtrack
@@ -126,7 +126,7 @@ class Medium(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hashed_id = db.Column(db.String)
     title = db.Column(db.String)
-    media_image = db.Column(db.Text)
+    image = db.Column(db.Text)
     info_link = db.Column(db.Text)
     description = db.Column(db.Text)
 
@@ -140,7 +140,7 @@ class Medium(db.Model):
             'id': self.id,
             'hashedId': self.hashed_id,
             'title': self.title,
-            'mediaImage': self.media_image,
+            'image': self.image,
             'infoLink': self.info_link,
             'description': self.description
         }
@@ -163,8 +163,8 @@ class Artist(db.Model):
     # Columns
     id = db.Column(db.Integer, primary_key=True)
     hashed_id = db.Column(db.String)
-    name = db.Column(db.String)
-    artist_image = db.Column(db.Text)
+    title = db.Column(db.String)
+    image = db.Column(db.Text)
     bio = db.Column(db.Text)
 
     # Relationships
@@ -176,8 +176,8 @@ class Artist(db.Model):
         return {
             'id': self.id,
             'hashedId': self.hashed_id,
-            'name': self.name,
-            'artistImage': self.artist_image,
+            'title': self.title,
+            'image': self.image,
             'bio': self.bio
         }
 
@@ -202,7 +202,7 @@ class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hashed_id = db.Column(db.String)
     title = db.Column(db.String)
-    album_image = db.Column(db.Text)
+    image = db.Column(db.Text)
     medium_id = db.Column(db.Integer, db.ForeignKey("media.id"), nullable=False)
 
     # Relationships
@@ -216,7 +216,7 @@ class Album(db.Model):
             'id': self.id,
             'hashedId': self.hashed_id,
             'title': self.title,
-            'albumImage': self.album_image,
+            'image': self.image,
             'mediumId': self.medium_id,
         }
 
@@ -242,7 +242,7 @@ class Track(db.Model):
     # Columns
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    track_image = db.Column(db.Text)
+    image = db.Column(db.Text)
     track_file = db.Column(db.Text)
     duration = db.Column(db.Integer)
     plays = db.Column(db.Integer)
@@ -260,12 +260,16 @@ class Track(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'trackImage': self.track_image,
+            'image': self.image,
             'trackFile': self.track_file,
             'duration': self.duration,
             'plays': self.plays,
-            'albumId': self.album_id,
-            'mediumId': self.medium_id,
+            'album': self.track_album.title,
+            'medium': self.track_medium.title,
+            'artists': [artist.title for artist in self.track_artists],
+            'albumHash': self.track_album.hashed_id,
+            'mediumHash': self.track_medium.hashed_id,
+            'artistHashes': [artist.hashed_id for artist in self.track_artists],
         }
 
 # ----------------------------------------------------------------------------
@@ -293,12 +297,16 @@ class Playlist(db.Model):
     playlist_following_users = db.relationship("User", secondary=user_playlist_follows, back_populates="user_followed_playlists")
     playlist_plls = db.relationship("PlaylistLink", back_populates="pll_playlist")
 
+    def playlist_tracks(self):
+        return [pll.track_id for pll in self.playlist_plls]
+
     def to_dict(self):
         return {
             'id': self.id,
             'hashedId': self.hashed_id,
             'title': self.title,
             'userId': self.user_id,
+            'trackIds': self.playlist_tracks()
         }
 
 
