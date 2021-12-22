@@ -1,4 +1,45 @@
 .side-bar {
     width: 100%;
     height: 100%;
+    background-color: black;
+    color: white;
+}
+
+.side-bar-placeholder {
+    width: 100%;
+    min-height: 50px;
+}
+
+.side-bar-upper {
+    height: 250px;
+    width: 100%;
+}
+
+.side-bar-nav {
+    height: 50px;
+    padding: 5px;
+}
+
+.side-bar-nav-content {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+}
+
+.side-bar-nav-label {
+    width: calc(100% - 70px);
+    margin-left: 1rem;
+    font-size: 2rem;
+}
+
+.side-bar-divider {
+    height: 1px;
+    width: 80%;
+    background-color: grey;
+    margin: 0px 10%;
+}
+
+.site-bar-middle {
+    height: 100px;
+    width: 100%;
 }

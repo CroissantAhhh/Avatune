@@ -8,6 +8,7 @@ import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PageContainer from './pages/PageContainer';
+
 import HomePage from './pages/HomePage';
 import AlbumPage from './pages/AlbumPage';
 import ArtistPage from './pages/ArtistPage';
@@ -19,7 +20,9 @@ import SearchResultsPage from './pages/SearchResultsPage';
 import SpecificResultsPage from './pages/SpecificResultsPage';
 import SplashPage from './pages/SplashPage';
 import UserPage from './pages/UserPage';
+import MyCategoryPage from './pages/MyCategoryPage';
 import NotFoundPage from './pages/NotFoundPage';
+
 import { authenticate } from './store/session';
 
 function App() {
@@ -77,6 +80,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute path='/search/:searchQuery/:category'>
             <PageContainer page={<SpecificResultsPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/my/:category'>
+            <PageContainer page={<MyCategoryPage />} />
           </ProtectedRoute>
           <Route>
             <NotFoundPage />
