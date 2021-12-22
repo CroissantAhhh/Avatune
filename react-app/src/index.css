@@ -14,6 +14,11 @@
     src: url(https://res.cloudinary.com/dmtj0amo0/raw/upload/v1640154661/Quicksand-Regular_y7plp1.ttf)
 }
 
+@font-face {
+    font-family: Spartan;
+    src: url(https://res.cloudinary.com/dmtj0amo0/raw/upload/v1640203315/Gotham-Light_tlzzpx.otf)
+}
+
 html {
     font-size: 62.5%;
     box-sizing: border-box;
@@ -39,6 +44,13 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+}
+
+.l-horizontal-spread {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 }
 

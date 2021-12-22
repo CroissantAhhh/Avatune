@@ -95,7 +95,7 @@ export default function SideBar() {
                 <div className="side-bar-nav l-horizontal hover-pointer">
                     <div
                         className="side-bar-nav-content l-horizontal"
-                        onClick={() => history.push('/home')}>
+                        onClick={() => history.push(`/playlist/${ownPlaylists[0].hashedId}`)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                         </svg>
@@ -121,17 +121,17 @@ export default function SideBar() {
                 </div>
                 <div className="playlist-container">
                     {playlistsTab ? (
-                        ownPlaylists.map(playlist => (
-                            <div className="playlist-listing-container hover-pointer">
-                                <div className="playlist-listing">
+                        ownPlaylists.slice(1).map(playlist => (
+                            <div key={playlist.hashedId} className="playlist-listing-container hover-pointer">
+                                <div className="playlist-listing" onClick={() => history.push(`/playlist/${playlist.hashedId}`)}>
                                     <p className="playlist-listing-title font-narrow">{playlist.title}</p>
                                 </div>
                             </div>
                         ))
                     ) : (
                         followedPlaylists.map(playlist => (
-                            <div className="playlist-listing-container hover-pointer">
-                                <div className="playlist-listing">
+                            <div key={playlist.hashedId} className="playlist-listing-container hover-pointer">
+                                <div className="playlist-listing" onClick={() => history.push(`/playlist/${playlist.hashedId}`)}>
                                     <p className="playlist-listing-title font-narrow">{playlist.title}</p>
                                 </div>
                             </div>

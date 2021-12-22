@@ -1,0 +1,65 @@
+.track-container {
+    width: 100%;
+    background-color: rgb(26, 25, 25);
+    color: white;
+    font-size: 1.5rem;
+    font-family: Gotham;
+}
+
+.track-container-placeholder {
+    height: 20px;
+    width: 100%;
+}
+
+.track-container-heading {
+    height: 30px;
+    width: calc(100% - 60px);
+    padding: 0px 30px;
+}
+
+.track-heading-index {
+    width: 3%;
+}
+
+.track-heading-image {
+    width: 1%;
+}
+
+.track-heading-title {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1%;
+}
+
+.track-heading-middle {
+    width: 48%;
+}
+
+.track-heading-album {
+    width: 50%;
+    display: flex;
+    justify-content: start;
+}
+
+.track-heading-date-added {
+    width: 39%;
+    display: flex;
+    justify-content: start;
+}
+
+.track-heading-plays {
+    width: 10%;
+    display: flex;
+    justify-content: start;
+}
+
+.track-heading-duration {
+    width: 5%;
+}
+
+.track-container-content {
+    overflow-y: scroll;
+    padding: 10px 30px;
+}

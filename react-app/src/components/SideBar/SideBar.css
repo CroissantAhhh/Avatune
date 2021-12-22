@@ -37,7 +37,7 @@
     height: 1px;
     width: 90%;
     background-color: grey;
-    margin: 1px 5%;
+    margin: 5px 5%;
 }
 
 .side-bar-middle {
@@ -67,18 +67,18 @@
 }
 
 .playlist-container {
-    height: calc(100% - 50px);
+    height: 100%;
     overflow-y: scroll;
 }
 
 .playlist-listing-container {
     height: 30px;
     padding: 5px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .playlist-listing {
     font-size: 1.5rem;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
 }

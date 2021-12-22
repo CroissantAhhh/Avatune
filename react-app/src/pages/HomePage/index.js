@@ -8,6 +8,7 @@ import { loadUserTracksMost } from '../../store/tracks';
 
 import GeneralListing from '../../components/GeneralListing';
 import GeneralListingContainer from '../../components/GeneralListingContainer';
+import TrackContainer from '../../components/TrackContainer';
 import TrackListing from '../../components/TrackListing';
 // Store dispatches/fetches needed:
 // - Albums: one album, most recent in database, links to the album page, 5 of user's most listened to albums (defined by most listened to songs in album)
@@ -47,12 +48,10 @@ export default function HomePage() {
 
     return (
         <div>
-            {isLoaded && (
+            {isLoaded ? (
                 <div>
                     <div className="tracks">
-                        {tracks.map((track, index) => (
-                            <TrackListing key={track.id} track={track} index={index + 1} playlist={false}/>
-                        ))}
+                        <TrackContainer tracks={tracks} playlist={false} />
                     </div>
                     <div className="listings-section">
                         <GeneralListingContainer title="Your Albums" listings={albums} compact={true} category="Album" />
@@ -67,6 +66,8 @@ export default function HomePage() {
                         <GeneralListingContainer title="Your Playlists" listings={playlists} compact={true} category="Playlist" />
                     </div>
                 </div>
+            ) : (
+                <div></div>
             )}
         </div>
     )

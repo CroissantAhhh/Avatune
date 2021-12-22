@@ -1,0 +1,66 @@
+.track-listing {
+    max-height: 60px;
+    width: 100%;
+    font-size: 1.5rem;
+    font-family: Spartan;
+    background-color: rgb(26, 25, 25);
+    color: white;
+    padding: 10px 0px;
+}
+
+.track-index {
+    width: 3%;
+}
+
+.track-category {
+    min-height: 40px;
+}
+
+.track-image {
+    width: 5%;
+}
+
+.track-title {
+    width: 37%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 5px;
+}
+
+.track-title-text {
+    width: calc(80%);
+    font-size: 2rem;
+    margin-bottom: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.track-middle-section {
+    width: 45%;
+}
+
+.track-album {
+    line-height: 40px;
+    width: calc(50%);
+}
+
+.track-album-title {
+    width: calc(100%);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.track-date-added {
+    width: 35%;
+}
+
+.track-favorite {
+    width: 5%;
+}
+
+.track-duration {
+    width: 5%;
+}
