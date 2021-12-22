@@ -1,0 +1,22 @@
+.general-listings-container {
+    background-color: rgb(20,20,20);
+    height: 450px;
+    padding: 20px;
+    color: white;
+}
+
+.title-container {
+    height: 50px;
+    font-size: 3rem;
+    font-family: Gotham;
+    padding-left: 20px;
+}
+
+.general-listings-section {
+    padding: 20px;
+    overflow-x: scroll;
+    display: flex;
+    gap: 20px;
+    border-radius: 5px;
+    background-color: black;
+}

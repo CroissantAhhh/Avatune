@@ -1,0 +1,33 @@
+.general-listing {
+    height: 320px;
+    width: 240px;
+    min-height: 300px;
+    min-width: 240px;
+    background-color: rgb(49, 47, 47);
+    color: white;
+    font-family: Gotham;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.general-listing-text {
+    min-height: 80px;
+    width: calc(100% - 40px);
+    font-size: 2rem;
+}
+
+.general-listing-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 2rem;
+    margin: 15px 0px;
+}
+
+.general-listing-category {
+    color: rgb(200, 200, 200);
+    margin: 10px 0px;
+}

@@ -1,5 +1,6 @@
 import { useHistory } from 'react-router-dom';
 
+import "./GeneralListing.css";
 
 // A general container element for a variety of resources
 // Category can be one of: Medium, Artist, Album, Playlist, User
@@ -13,8 +14,10 @@ export default function GeneralListing({ item, category }) {
     return (
         <div className="general-listing" onClick={redirect}>
             <img src={item.image} alt="item image/artwork" height="200px" width="200px"></img>
-            <p>{item.title}</p>
-            <p>{category}</p>
+            <div className="general-listing-text">
+                <p className="general-listing-title">{item.title}</p>
+                <p className="general-listing-category">{category}</p>
+            </div>
         </div>
     )
 }

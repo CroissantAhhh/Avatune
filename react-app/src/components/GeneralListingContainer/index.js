@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import GeneralListing from "../GeneralListing"
 
+import './GeneralListingContainer.css';
 
 export default function GeneralListingContainer({ title, listings, compact, category }) {
     const [displayedListings, setDisplayedListings] = useState(listings)
@@ -13,11 +14,11 @@ export default function GeneralListingContainer({ title, listings, compact, cate
     }, [])
 
     return (
-        <div className="listings-container l-vertical">
+        <div className="general-listings-container l-vertical">
             <div className="title-container">
-                <p>{title}</p>
+                <p className="title-container-text">{title}</p>
             </div>
-            <div className="listings-section l-horizontal">
+            <div className="general-listings-section">
                 {displayedListings.map(listing => (
                     <GeneralListing key={listing.hashedId} item={listing} category={category} />
                 ))}
