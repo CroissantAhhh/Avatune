@@ -4,10 +4,31 @@
     src: url(https://res.cloudinary.com/dmtj0amo0/raw/upload/v1634337186/Gotham-Bold_ump0rd.otf)
 }
 
+@font-face {
+    font-family: Gotham-Book;
+    src: url(https://res.cloudinary.com/dmtj0amo0/raw/upload/v1640153833/Gotham_Book_Regular_liwvvn.otf)
+}
+
+@font-face {
+    font-family: Gotham-Narrow;
+    src: url(https://res.cloudinary.com/dmtj0amo0/raw/upload/v1640154661/Quicksand-Regular_y7plp1.ttf)
+}
+
 html {
-    font-family: Gotham;
     font-size: 62.5%;
     box-sizing: border-box;
+}
+
+.font-bold {
+    font-family: Gotham;
+}
+
+.font-normal {
+    font-family: Gotham-Book;
+}
+
+.font-narrow {
+    font-family: Gotham-Narrow;
 }
 
 .window {

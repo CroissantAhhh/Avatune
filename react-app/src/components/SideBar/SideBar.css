@@ -11,12 +11,12 @@
 }
 
 .side-bar-upper {
-    height: 250px;
+    height: 210px;
     width: 100%;
 }
 
 .side-bar-nav {
-    height: 50px;
+    height: 40px;
     padding: 5px;
 }
 
@@ -24,6 +24,7 @@
     height: 100%;
     width: 100%;
     background-color: black;
+    border-radius: 5px;
 }
 
 .side-bar-nav-label {
@@ -34,12 +35,50 @@
 
 .side-bar-divider {
     height: 1px;
-    width: 80%;
+    width: 90%;
     background-color: grey;
-    margin: 0px 10%;
+    margin: 1px 5%;
 }
 
-.site-bar-middle {
-    height: 100px;
+.side-bar-middle {
+    height: 80px;
     width: 100%;
+}
+
+.side-bar-lower {
+    margin-top: 20px;
+    height: calc(100% - 350px);
+    width: 100%;
+}
+
+.playlist-tab-toggle {
+    min-height: 50px;
+    width: 100%;
+}
+
+.playlist-tab {
+    height: 50px;
+    width: 50%;
+    font-size: 2rem;
+}
+
+.playlist-tab-title {
+    text-align: center;
+}
+
+.playlist-container {
+    height: calc(100% - 50px);
+    overflow-y: scroll;
+}
+
+.playlist-listing-container {
+    height: 30px;
+    padding: 5px 20px;
+}
+
+.playlist-listing {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
