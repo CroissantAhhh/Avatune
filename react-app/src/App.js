@@ -6,11 +6,13 @@ import { loadUserPlaylists } from './store/playlists';
 
 import { useBrowsingHistory } from './context/BrowsingHistoryContext';
 
+import ScrollToTop from './utils/scrollToTop';
+
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import PageContainer from './pages/PageContainer';
 
+import PageContainer from './pages/PageContainer';
 import HomePage from './pages/HomePage';
 import AlbumPage from './pages/AlbumPage';
 import ArtistPage from './pages/ArtistPage';

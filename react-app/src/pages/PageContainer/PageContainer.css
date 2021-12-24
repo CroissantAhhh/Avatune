@@ -29,5 +29,6 @@
 }
 
 .main-page-content {
+    height: calc(100% - 70px);
     overflow-y: scroll;
 }

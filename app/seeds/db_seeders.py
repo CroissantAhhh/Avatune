@@ -48,6 +48,22 @@ albums_data = [
       { "name": "Naruto Shippuden: Original Soundtrack III", "albumImageURL": "https://res.cloudinary.com/dmtj0amo0/image/upload/v1634660403/Naruto/Naruto%20Shippuden%203/Cover_k0qoum.jpg", "artist": "Yasuharu Takanashi", "mediumId": 8},
 ]
 
+playlist_images = [
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/datetech.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/karasuno.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/seijoh.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/johzenji.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/wakunan.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/shiratorizawa.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/nekoma.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/fukurodani.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/inarizaki.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/tsubakihara.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/kamomedai.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/nohebi.jpeg',
+    'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/itachiyama.jpeg'
+]
+
 def generate_hash_id():
     return ''.join(choice(string.ascii_letters + string.digits) for _ in range(20))
 
@@ -555,6 +571,7 @@ def seed_playlists():
             new_pl = Playlist(
                 hashed_id = generate_hash_id(),
                 title = f"{choice(words1)} {choice(words2)}",
+                image = choice(playlist_images),
                 user_id = user.id
             )
             db.session.add(new_pl)

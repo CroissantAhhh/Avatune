@@ -3,7 +3,7 @@
     width: 240px;
     min-height: 300px;
     min-width: 240px;
-    background-color: rgb(49, 47, 47);
+    background-color: rgb(20,20,20);
     color: white;
     font-family: Gotham;
     display: flex;
@@ -25,14 +25,15 @@
 }
 
 .general-listing-title {
+    height: calc(15px + 2rem);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     font-size: 2rem;
-    margin: 15px 0px;
+    margin: 15px 0px 0px 0px;
 }
 
 .general-listing-category {
     color: rgb(200, 200, 200);
-    margin: 10px 0px;
+    font-size: 1.5rem;
 }

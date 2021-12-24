@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom';
+import { useBrowsingHistory } from '../../context/BrowsingHistoryContext';
 
 import "./GeneralListing.css";
 
@@ -6,16 +7,18 @@ import "./GeneralListing.css";
 // Category can be one of: Medium, Artist, Album, Playlist, User
 export default function GeneralListing({ item, category }) {
     const history = useHistory();
+    const { nextLocation } = useBrowsingHistory();
 
-    function redirect() {
-        history.push(`/${category.toLowerCase()}/${item.hashedId}`)
-    };
+    function nextPath(path) {
+        nextLocation(path);
+        history.push(path);
+    }
 
     return (
-        <div className="general-listing hover-pointer" onClick={redirect}>
-            <img src={item.image} alt="item image/artwork" height="200px" width="200px"></img>
+        <div className="general-listing hover-pointer" onClick={() => nextPath(`/${category.toLowerCase()}/${item.hashedId}`)}>
+            <img className={(category === 'User' || category ==='Artist') ? "rounded shadowed" : "shadowed" }src={item.image} alt="item image/artwork" height="200px" width="200px"></img>
             <div className="general-listing-text">
-                <p className="general-listing-title">{item.title}</p>
+                <p className="general-listing-title">{category === 'User' ? item.username : item.title}</p>
                 <p className="general-listing-category">{category}</p>
             </div>
         </div>

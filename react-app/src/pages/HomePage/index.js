@@ -12,6 +12,10 @@ import GeneralListing from '../../components/GeneralListing';
 import GeneralListingContainer from '../../components/GeneralListingContainer';
 import TrackContainer from '../../components/TrackContainer';
 import TrackListing from '../../components/TrackListing';
+
+import LoadingPage from '../LoadingPage';
+
+import './HomePage.css'
 // Store dispatches/fetches needed:
 // - Albums: one album, most recent in database, links to the album page, 5 of user's most listened to albums (defined by most listened to songs in album)
 // - Playlists: 5 of user's (random?), "see all" links to all of user's playlist
@@ -33,6 +37,7 @@ export default function HomePage() {
 
     useEffect(() => {
         (async () => {
+            setIsLoaded(false);
             await dispatch(loadUserAlbums(sessionUser.id));
             await dispatch(getLatestAlbum());
             await dispatch(loadUserMediaMost(sessionUser.id));
@@ -49,7 +54,7 @@ export default function HomePage() {
     const tracks = useSelector(state => Object.values(state.tracks))
 
     return (
-        <div>
+        <div className="home-page-container">
             {isLoaded ? (
                 <div>
                     <div className="tracks">
@@ -69,7 +74,7 @@ export default function HomePage() {
                     </div>
                 </div>
             ) : (
-                <div></div>
+                <LoadingPage />
             )}
         </div>
     )

@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useLocation } from "react-router-dom";
+
 import CurrentSongsProvider from "../../context/CurrentSongsContext";
 import NavBar from "../../components/NavBar/NavBar";
 import MusicPlayer from "../../components/MusicPlayer";
@@ -6,6 +9,12 @@ import SideBar from "../../components/SideBar";
 import './PageContainer.css';
 
 export default function PageContainer({ page }) {
+    const location = useLocation();
+
+    useEffect(() => {
+        const mainPage = document.querySelector('.main-page-content');
+        mainPage.scrollTo(0, 0);
+    }, [location.pathname])
 
     return (
         <CurrentSongsProvider>
