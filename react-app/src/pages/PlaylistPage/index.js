@@ -29,7 +29,7 @@ export default function PlaylistPage() {
         <div>
             {isLoaded && (
                 <div>
-                    <TrackContainer tracks={tracks} playlist={true} />
+                    <TrackContainer tracks={tracks} category={"playlist"} />
                 </div>
             )}
         </div>

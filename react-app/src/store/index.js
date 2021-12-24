@@ -7,6 +7,7 @@ import artists from './artists';
 import albums from './albums';
 import tracks from './tracks';
 import playlists from './playlists';
+import users from './users';
 
 const rootReducer = combineReducers({
   media,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   albums,
   tracks,
   playlists,
+  users,
   session,
 });
 

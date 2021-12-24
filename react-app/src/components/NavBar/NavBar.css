@@ -37,13 +37,41 @@
 }
 
 .dynamic-sections {
-    width: calc(100% - 350px);
+    height: 100%;
+    width: calc(100% - 300px);
 }
 
 .search-section {
-
+    width: 70%;
 }
 
 .profile-section {
+    height: 100%;
+    width: 30%;
+}
 
+#profile-dropdown {
+    height: 52px;
+}
+
+#profile-button {
+    height: 100%;
+    border-radius: 30px;
+    background-color: black;
+}
+
+.profile-button-container {
+    height: 40px;
+    border-radius: 20px;
+    padding: 0px 15px 0px 0px;
+}
+
+.profile-button-image {
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.profile-button-text {
+    font-size: 1.5rem;
+    font-family: Gotham;
 }

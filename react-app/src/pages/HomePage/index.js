@@ -53,7 +53,7 @@ export default function HomePage() {
             {isLoaded ? (
                 <div>
                     <div className="tracks">
-                        <TrackContainer tracks={tracks} playlist={false} />
+                        <TrackContainer tracks={tracks} category={"album"} />
                     </div>
                     <div className="listings-section">
                         <GeneralListingContainer title="Your Albums" listings={albums} category="Album" />

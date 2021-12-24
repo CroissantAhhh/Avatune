@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown'
 import { useBrowsingHistory } from '../../context/BrowsingHistoryContext';
 
 import './NavBar.css';
@@ -9,6 +11,7 @@ export default function NavBar() {
   const location = useLocation();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [title, setTitle] = useState("");
+  const sessionUser = useSelector(state => state.session.user);
   const { locations, goBack, goForward } = useBrowsingHistory();
 
   function updateWidth() {
@@ -85,12 +88,22 @@ export default function NavBar() {
       <div className="page-title-section">
         <p className="page-title">{title}</p>
       </div>
-      <div className="dynamic-sections">
+      <div className="dynamic-sections l-horizontal">
         <div className="search-section">
-
+          Search Bar
         </div>
-        <div className="profile-section">
-
+        <div className="profile-section l-horizontal">
+          <Dropdown id="profile-dropdown" title="Profile" onClick={() => history.push(`/user/${sessionUser.hashedId}`)}>
+            <Dropdown.Toggle id="profile-button" variant="success">
+              <div className="profile-button-container l-horizontal">
+                <img className="profile-button-image" src={sessionUser.image} height="40px" alt="profile pic" />
+                <p className="profile-button-text">{sessionUser.username}</p>
+                <svg xmlns="http://www.w3.org/2000/svg" height="30px" width="30px" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </Dropdown.Toggle>
+          </Dropdown>
         </div>
       </div>
     </div>

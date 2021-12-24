@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import './TrackListing.css';
 
 
-export default function TrackListing({ track, index, playlist }) {
+export default function TrackListing({ track, index, category }) {
     const likedSongs = useSelector(state => Object.values(state.playlists)[0].trackIds)
     const [isLiked, setIsLiked] = useState(likedSongs.includes(track.id));
 
@@ -36,6 +36,33 @@ export default function TrackListing({ track, index, playlist }) {
         return `${minutes}:${seconds}`;
     }
 
+    let middleSection;
+    switch(category) {
+        case 'album':
+            middleSection = (
+                <div className="track-plays track-category l-horizontal">
+                    <p>{track.plays}</p>
+                </div>
+            )
+        case 'playlist':
+            middleSection = (
+                <>
+                    <div className="track-album track-category">
+                        <p className="track-album-title track-category">{track.album}</p>
+                    </div>
+                    <div className="track-date-added">
+                        <p>{timeElapsed(track.dateAdded)}</p>
+                    </div>
+                </>
+            )
+        case 'user':
+            middleSection = (
+                <div className="track-album track-category">
+                    <p className="track-album-title track-category">{track.album}</p>
+                </div>
+            )
+    }
+
     return (
         <div className="track-listing l-horizontal-spread hover-pointer">
             <div className="track-index track-category l-horizontal">
@@ -49,20 +76,7 @@ export default function TrackListing({ track, index, playlist }) {
                 <p className="track-artists-text">{track.artists.join(", ")}</p>
             </div>
             <div className="track-middle-section l-horizontal-spread track-category">
-                {playlist ? (
-                    <>
-                        <div className="track-album track-category">
-                            <p className="track-album-title track-category">{track.album}</p>
-                        </div>
-                        <div className="track-date-added">
-                            <p>{timeElapsed(track.dateAdded)}</p>
-                        </div>
-                    </>
-                ) : (
-                    <div className="track-plays track-category l-horizontal">
-                        <p>{track.plays}</p>
-                    </div>
-                )}
+                {middleSection}
             </div>
 
             <div className="track-favorite track-category l-horizontal">
