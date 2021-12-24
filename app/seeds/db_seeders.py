@@ -58,6 +58,7 @@ def seed_users():
     jason = User(
         hashed_id = generate_hash_id(),
         username = 'Jason Zhou',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/oikawa.png',
         email = 'jasonzhou8597@gmail.com',
         password = 'jasonzhou2',
     )
@@ -67,6 +68,7 @@ def seed_users():
     danp = User(
         hashed_id = generate_hash_id(),
         username = 'Dan Purcell',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/ukai.jpg',
         email = 'danp@gmail.com',
         password = 'password',
     )
@@ -75,6 +77,7 @@ def seed_users():
     michaele = User(
         hashed_id = generate_hash_id(),
         username = 'Michael Ericson',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/nishinoya.jpg',
         email = 'michaele@gmail.com',
         password = 'password',
     )
@@ -83,6 +86,7 @@ def seed_users():
     nebyou = User(
         hashed_id = generate_hash_id(),
         username = 'Nebyou Ejigu',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/ojiro.jpeg',
         email = 'daemail@gmail.com',
         password = 'password',
     )
@@ -91,6 +95,7 @@ def seed_users():
     annd = User(
         hashed_id = generate_hash_id(),
         username = 'Ann Donnelly',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/mikachan.jpg',
         email = 'annd@gmail.com',
         password = 'password',
     )
@@ -99,6 +104,7 @@ def seed_users():
     jamest = User(
         hashed_id = generate_hash_id(),
         username = 'James Thompson',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/osamu.jpeg',
         email = 'jamest@gmail.com',
         password = 'password',
     )
@@ -107,6 +113,7 @@ def seed_users():
     pstory = User(
         hashed_id = generate_hash_id(),
         username = 'Patrick Story',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/tanaka.jpeg',
         email = 'pstory@gmail.com',
         password = 'password',
     )
@@ -115,6 +122,7 @@ def seed_users():
     willzill = User(
         hashed_id = generate_hash_id(),
         username = 'William Ziller',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/aone.jpeg',
         email = 'williamz@gmail.com',
         password = 'password',
     )
@@ -123,6 +131,7 @@ def seed_users():
     samo = User(
         hashed_id = generate_hash_id(),
         username = 'Sam Ortega',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/sugawara.jpg',
         email = 'samo@gmail.com',
         password = 'password',
     )
@@ -131,6 +140,7 @@ def seed_users():
     garrettm = User(
         hashed_id = generate_hash_id(),
         username = 'Garrett Middleton',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/shinsuke.jpg',
         email = 'garrettm@gmail.com',
         password = 'password',
     )
@@ -139,6 +149,7 @@ def seed_users():
     ajabush = User(
         hashed_id = generate_hash_id(),
         username = 'AJ Abushaban',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/akaashi.jpg',
         email = 'ajabush@gmail.com',
         password = 'password',
     )
@@ -147,6 +158,7 @@ def seed_users():
     revan = User(
         hashed_id = generate_hash_id(),
         username = 'Revan Fajardo',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/atsumu.jpg',
         email = 'revanf@gmail.com',
         password = 'password',
     )
@@ -155,14 +167,25 @@ def seed_users():
     brandonl = User(
         hashed_id = generate_hash_id(),
         username = 'Brandon Laursen',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/suguru.jpeg',
         email = 'brandonl@gmail.com',
         password = 'password',
     )
     db.session.add(brandonl)
 
+    nicks = User(
+        hashed_id = generate_hash_id(),
+        username = 'Nick Sim',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/terushima.jpg',
+        email = 'nicks@gmail.com',
+        password = 'password',
+    )
+    db.session.add(nicks)
+
     adamg = User(
         hashed_id = generate_hash_id(),
         username = 'Adam Guan',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/kenma.png',
         email = 'adamg@gmail.com',
         password = 'password',
     )
@@ -171,6 +194,7 @@ def seed_users():
     kiaram = User(
         hashed_id = generate_hash_id(),
         username = 'Kiara Mendaros',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/yachi.jpg',
         email = 'kiaram@gmail.com',
         password = 'password',
     )
@@ -179,6 +203,7 @@ def seed_users():
     nevinc = User(
         hashed_id = generate_hash_id(),
         username = 'Nevin Chow',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/goshiki.jpeg',
         email = 'nevinc@gmail.com',
         password = 'password',
     )
@@ -187,6 +212,7 @@ def seed_users():
     jessiez = User(
         hashed_id = generate_hash_id(),
         username = 'Jessie Zhuo',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/yukie.png',
         email = 'jessiez@gmail.com',
         password = 'password',
     )
@@ -195,6 +221,7 @@ def seed_users():
     howardc = User(
         hashed_id = generate_hash_id(),
         username = 'Howard Chang',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/hinata.jpg',
         email = 'howardc@gmail.com',
         password = 'password',
     )
@@ -203,6 +230,7 @@ def seed_users():
     davidr = User(
         hashed_id = generate_hash_id(),
         username = 'David Rogers',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/tsukishima.jpeg',
         email = 'davidr@gmail.com',
         password = 'password',
     )
@@ -211,6 +239,7 @@ def seed_users():
     robk = User(
         hashed_id = generate_hash_id(),
         username = 'Rob Kauth',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/shirabu.jpeg',
         email = 'robk@gmail.com',
         password = 'password',
     )
@@ -219,6 +248,7 @@ def seed_users():
     brads = User(
         hashed_id = generate_hash_id(),
         username = 'Brad Simpson',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/kyotani.jpg',
         email = 'brads@gmail.com',
         password = 'password',
     )
@@ -227,6 +257,7 @@ def seed_users():
     ish_chaudry = User(
         hashed_id = generate_hash_id(),
         username = 'Ish Chaudry',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/tendou.jpg',
         email = 'ishc@gmail.com',
         password = 'password',
     )
@@ -235,6 +266,7 @@ def seed_users():
     chrisw = User(
         hashed_id = generate_hash_id(),
         username = 'Chris Wu',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/ushijima.jpg',
         email = 'chrisw@gmail.com',
         password = 'password',
     )
@@ -243,6 +275,7 @@ def seed_users():
     dannyk = User(
         hashed_id = generate_hash_id(),
         username = 'Danny Kim',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/bokuto.jpg',
         email = 'dannyk@gmail.com',
         password = 'password'
     )
@@ -251,6 +284,7 @@ def seed_users():
     kwang = User(
         hashed_id = generate_hash_id(),
         username = 'Kwang Kim',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/kuroo.jpg',
         email = 'kwangk@gmail.com',
         password = 'password',
     )
@@ -259,10 +293,12 @@ def seed_users():
     anish = User(
         hashed_id = generate_hash_id(),
         username = 'Anish Velagapudi',
+        image = 'https://avatune-profile-pics.s3.us-west-2.amazonaws.com/kageyama.jpg',
         email = 'anishv@gmail.com',
         password = 'password'
     )
     db.session.add(anish)
+
     db.session.commit()
     for user1 in User.query.all():
         for user2 in User.query.all():

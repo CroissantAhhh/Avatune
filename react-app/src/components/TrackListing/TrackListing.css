@@ -4,8 +4,15 @@
     font-size: 1.5rem;
     font-family: Spartan;
     background-color: rgb(20, 20, 20);
-    color: white;
+    color: rgb(200, 200, 200);
     padding: 10px 0px;
+    border-radius: 10px;
+    transition: background-color 0.1s color 0.1s;
+}
+
+.track-listing:hover {
+    background-color: rgb(56, 56, 56);
+    color: white;
 }
 
 .track-index {
@@ -35,6 +42,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    color: white;
 }
 
 .track-middle-section {

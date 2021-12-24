@@ -6,6 +6,8 @@ import { loadUserMediaMost } from '../../store/media';
 import { loadUserArtists } from '../../store/artists';
 import { loadUserTracksMost } from '../../store/tracks';
 
+import { useBrowsingHistory } from '../../context/BrowsingHistoryContext';
+
 import GeneralListing from '../../components/GeneralListing';
 import GeneralListingContainer from '../../components/GeneralListingContainer';
 import TrackContainer from '../../components/TrackContainer';
@@ -24,7 +26,7 @@ export default function HomePage() {
     // Followed Artists
     // Recently Listened to Albums
     // Recently Played Tracks
-
+    const { locations, setLocation } = useBrowsingHistory();
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -54,16 +56,16 @@ export default function HomePage() {
                         <TrackContainer tracks={tracks} playlist={false} />
                     </div>
                     <div className="listings-section">
-                        <GeneralListingContainer title="Your Albums" listings={albums} compact={true} category="Album" />
+                        <GeneralListingContainer title="Your Albums" listings={albums} category="Album" />
                     </div>
                     <div className="listings-section">
-                        <GeneralListingContainer title="Your Artists" listings={artists} compact={true} category="Artist" />
+                        <GeneralListingContainer title="Your Artists" listings={artists} category="Artist" />
                     </div>
                     <div className="listings-section">
-                        <GeneralListingContainer title="Your Media" listings={media} compact={true} category="Medium" />
+                        <GeneralListingContainer title="Your Media" listings={media} category="Medium" />
                     </div>
                     <div className="listings-section">
-                        <GeneralListingContainer title="Your Playlists" listings={playlists} compact={true} category="Playlist" />
+                        <GeneralListingContainer title="Your Playlists" listings={playlists} category="Playlist" />
                     </div>
                 </div>
             ) : (

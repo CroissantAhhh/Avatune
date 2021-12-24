@@ -40,19 +40,19 @@
 .track-heading-album {
     width: 50%;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .track-heading-date-added {
     width: 39%;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .track-heading-plays {
     width: 10%;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .track-heading-duration {

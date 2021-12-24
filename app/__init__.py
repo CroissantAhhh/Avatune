@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
 
-from .models import db, User
+from .models import db, User, Medium, Artist, Album, Playlist
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.medium_routes import media_routes
@@ -13,6 +13,7 @@ from .api.artist_routes import artist_routes
 from .api.album_routes import album_routes
 from .api.track_routes import track_routes
 from .api.playlist_routes import playlist_routes
+from .api.file_routes import file_routes
 
 from .seeds import seed_commands
 
@@ -41,6 +42,7 @@ app.register_blueprint(artist_routes, url_prefix='/api/artists')
 app.register_blueprint(album_routes, url_prefix='/api/albums')
 app.register_blueprint(track_routes, url_prefix='/api/tracks')
 app.register_blueprint(playlist_routes, url_prefix='/api/playlists')
+app.register_blueprint(file_routes, url_prefix='/api/files')
 db.init_app(app)
 Migrate(app, db)
 
@@ -80,3 +82,21 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_static_file('favicon.ico')
     return app.send_static_file('index.html')
+
+@app.route('/api/general/<category>/<category_hash>')
+def get_name(category, category_hash):
+    if category == 'user':
+        user = User.query.filter(User.hashed_id == category_hash).one()
+        return { "title": user.username }
+    elif category == 'medium':
+        medium = Medium.query.filter(Medium.hashed_id == category_hash).one()
+        return { "title": medium.title }
+    elif category == 'artist':
+        artist = Artist.query.filter(Artist.hashed_id == category_hash).one()
+        return { "title": artist.title }
+    elif category == 'album':
+        album = Album.query.filter(Album.hashed_id == category_hash).one()
+        return { "title": album.title }
+    elif category == 'playlist':
+        playlist = Playlist.query.filter(Playlist.hashed_id == category_hash).one()
+        return { "title": playlist.title }

@@ -12,7 +12,7 @@ export default function GeneralListing({ item, category }) {
     };
 
     return (
-        <div className="general-listing" onClick={redirect}>
+        <div className="general-listing hover-pointer" onClick={redirect}>
             <img src={item.image} alt="item image/artwork" height="200px" width="200px"></img>
             <div className="general-listing-text">
                 <p className="general-listing-title">{item.title}</p>

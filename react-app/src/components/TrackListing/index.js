@@ -37,7 +37,7 @@ export default function TrackListing({ track, index, playlist }) {
     }
 
     return (
-        <div className="track-listing l-horizontal-spread">
+        <div className="track-listing l-horizontal-spread hover-pointer">
             <div className="track-index track-category l-horizontal">
                 <p>{index}</p>
             </div>

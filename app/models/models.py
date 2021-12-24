@@ -65,6 +65,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     hashed_id = db.Column(db.String)
     username = db.Column(db.String(40), nullable=False, unique=True)
+    image = db.Column(db.String(255), default='https://avatune-profile-pics.s3.us-west-2.amazonaws.com/avatune-default.jpg')
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
@@ -98,6 +99,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'hashedId': self.hashed_id,
             'username': self.username,
+            'image': self.image,
             'email': self.email,
             'following': [user.followed_id for user in self.get_followed()],
             'followedBy': [user.follower_id for user in self.get_followers()]
@@ -288,6 +290,7 @@ class Playlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hashed_id = db.Column(db.String)
     title = db.Column(db.String)
+    image = db.Column(db.String(255), default='https://avatune-profile-pics.s3.us-west-2.amazonaws.com/avatune-playlist-default.jpeg')
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     # Relationships
@@ -303,6 +306,7 @@ class Playlist(db.Model):
             'id': self.id,
             'hashedId': self.hashed_id,
             'title': self.title,
+            'image': self.image,
             'userId': self.user_id,
             'trackIds': self.playlist_tracks()
         }

@@ -31,6 +31,15 @@ export const loadUserTracksMost = (userId) => async dispatch => {
     };
 };
 
+export const loadUserTracksRecent = (userId) => async dispatch => {
+    const response = await fetch(`/api/tracks/userRecent/${userId}`);
+
+    if (response.ok) {
+        const tracks = await response.json();
+        dispatch(load(tracks.tracks));
+    };
+};
+
 export const loadPlaylistTracks = (playlistId) => async dispatch => {
     const response = await fetch(`/api/tracks/byPlaylist/${playlistId}`);
 

@@ -71,11 +71,14 @@ def tracks_full_search(track_search):
 @track_routes.route('/userMost/<int:user_id>')
 def user_most_played(user_id):
     user_track_plays = UserTrackPlays.query.filter(UserTrackPlays.user_id == user_id).all()
-    if len(user_track_plays) <= 5:
-        return { "tracks": [Track.query.get(track.track_id).to_dict() for track in user_track_plays] }
-    else:
-        user_track_plays.sort(reverse=True, key=lambda x: x.count)
-        return { "tracks": [Track.query.get(track.track_id).to_dict() for track in user_track_plays[0:5]] }
+    user_track_plays.sort(reverse=True, key=lambda x: x.count)
+    return { "tracks": [Track.query.get(track.track_id).to_dict() for track in user_track_plays[0:10]] }
+
+@track_routes.route('/userRecent/<int:user_id>')
+def user_recently_played(user_id):
+    user_track_plays = UserTrackPlays.query.filter(UserTrackPlays.user_id == user_id).all()
+    user_track_plays.sort(reverse=True, key=lambda x: dt.datetime.now() - x.last_played)
+    return { "tracks": [Track.query.get(track.track_id).to_dict() for track in user_track_plays[0:10]] }
 
 @track_routes.route('/mediumMost/<int:medium_id>')
 def medium_most_played(medium_id):

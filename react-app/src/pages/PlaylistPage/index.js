@@ -16,7 +16,7 @@ export default function PlaylistPage() {
 
     useEffect(() => {
         (async () => {
-            await dispatch(loadPlaylistTracks(currentPlaylist.id));
+            await dispatch(loadPlaylistTracks(currentPlaylist?.id));
             await setIsLoaded(true);
         })();
     }, [playlistHash])

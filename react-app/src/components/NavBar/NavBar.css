@@ -1,4 +1,49 @@
 .site-nav-bar {
     height: 100%;
+    width: 100%;
+    background-color: rgb(39, 39, 39);
+}
+
+.history-button {
+    color: white;
+}
+
+.history-controls {
+    width: 100px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.history-button {
+    height: 30px;
+    width: 30px;
+    border: 1px solid white;
     background-color: black;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-title-section {
+    width: 200px;
+    font-size: 2rem;
+    color: white;
+    font-family: Gotham;
+}
+
+.page-title {
+    margin-left: 20px;
+}
+
+.dynamic-sections {
+    width: calc(100% - 350px);
+}
+
+.search-section {
+
+}
+
+.profile-section {
+
 }
