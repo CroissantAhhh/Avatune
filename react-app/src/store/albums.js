@@ -22,6 +22,16 @@ export const loadUserAlbums = (userId) => async dispatch => {
     };
 };
 
+export const loadAlbumByHash = (albumHash) => async dispatch => {
+    const response = await fetch(`/api/albums/byHash/${albumHash}`);
+
+    if (response.ok) {
+        const albums = await response.json();
+        dispatch(load(albums.albums));
+        return albums.albums[0];
+    }
+}
+
 export const loadMediaAlbums = (mediumID) => async dispatch => {
     const response = await fetch(`/api/albums/byMedia/${mediumID}`);
 

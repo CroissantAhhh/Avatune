@@ -2,3 +2,63 @@
     height: 100%;
     width: 100%;
 }
+
+.welcome-section {
+    height: 200px;
+    background-image: linear-gradient(to bottom, rgb(1, 166, 196), #FF6400);
+    padding: 40px;
+}
+
+.welcome-text {
+    color: white;
+    font-size: 4rem;
+    font-family: Gotham;
+}
+
+.home-tracks-heading {
+    height: 80px;
+    background-color: rgb(20, 20, 20);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.home-tracks-heading-text {
+    color: white;
+    font-family: Gotham;
+    font-size: 3rem;
+}
+
+.featured-section {
+    height: 500px;
+    width: 100%;
+    background-color: #FF6400;
+}
+
+.featured-info {
+    height: 300px;
+    width: 50%;
+    color: white;
+    font-family: Gotham;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.featured-info {
+    font-size: 3rem;
+}
+
+.featured-medium {
+    font-size: 13rem;
+}
+
+.featured-link {
+    font-size: 2rem;
+    font-family: Gotham-Book;
+}
+
+.featured-image {
+    box-shadow: inset 0px 0px 40px 40px #FF6400;
+}

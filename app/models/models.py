@@ -217,7 +217,8 @@ class Album(db.Model):
             'hashedId': self.hashed_id,
             'title': self.title,
             'image': self.image,
-            'mediumId': self.medium_id,
+            'medium': { 'id': self.album_medium.id, 'title': self.album_medium.title },
+            'artists': [{ 'id': artist.id, 'title': artist.title } for artist in self.album_artists]
         }
 
 # ---------------------------------------------------------------------------------------
@@ -292,6 +293,7 @@ class Playlist(db.Model):
     title = db.Column(db.String)
     image = db.Column(db.String(255), default='https://avatune-profile-pics.s3.us-west-2.amazonaws.com/avatune-playlist-default.jpeg')
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    # default = db.Column(db.Boolean)
 
     # Relationships
     playlist_user = db.relationship("User", back_populates="user_playlists")

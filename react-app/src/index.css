@@ -36,10 +36,6 @@ html {
     font-family: Gotham-Narrow;
 }
 
-.window {
-    height: max-content;
-}
-
 .l-horizontal {
     display: flex;
     flex-direction: row;
@@ -63,6 +59,10 @@ html {
     cursor: pointer;
 }
 
+.link-hover:hover {
+    text-decoration: underline;
+}
+
 button {
     height: 40px;
     background-color: rgb(36, 36, 36);
@@ -81,4 +81,23 @@ button:hover {
 
 .shadowed {
     box-shadow: 0px 0px 50px 20px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
+.page-load-transition {
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.background {
+    background-color: rgb(20, 20, 20);
 }

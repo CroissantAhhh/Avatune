@@ -53,6 +53,7 @@ export default function TrackContainer({ tracks, category }) {
                     </svg>
                 </div>
             </div>
+            <div className="track-container-divider"></div>
             <div className="track-container-content">
                 {tracks.map((track, index) => (
                     <TrackListing key={track.id} track={track} index={index + 1} category={category}/>

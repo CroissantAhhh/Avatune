@@ -26,6 +26,7 @@ import SplashPage from './pages/SplashPage';
 import UserPage from './pages/UserPage';
 import MyCategoryPage from './pages/MyCategoryPage';
 import NotFoundPage from './pages/NotFoundPage';
+import LoadingPage from './pages/LoadingPage';
 
 import { authenticate } from './store/session';
 
@@ -43,12 +44,13 @@ function App() {
   }, [dispatch]);
 
   if (!loaded) {
-    return null;
+    return (
+      <LoadingPage />
+    )
   }
 
   return (
     <BrowserRouter>
-      <div className="window">
         <Switch>
           <Route path='/' exact={true}>
             <SplashPage />
@@ -93,7 +95,6 @@ function App() {
             <NotFoundPage />
           </Route>
         </Switch>
-      </div>
     </BrowserRouter>
   );
 }

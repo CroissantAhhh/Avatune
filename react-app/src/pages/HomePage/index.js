@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import { loadUserAlbums, getLatestAlbum } from '../../store/albums';
 import { loadUserMediaMost } from '../../store/media';
@@ -30,16 +31,39 @@ export default function HomePage() {
     // Followed Artists
     // Recently Listened to Albums
     // Recently Played Tracks
-    const { locations, setLocation } = useBrowsingHistory();
+    const { nextLocation } = useBrowsingHistory();
     const dispatch = useDispatch();
+    const history = useHistory();
     const sessionUser = useSelector(state => state.session.user)
     const [isLoaded, setIsLoaded] = useState(false)
+    const [latestAlbum, setLatestAlbum] = useState();
+
+    function featuredLink() {
+        nextLocation('/medium/FzNUn00EOTyibV58b871');
+        history.push('/medium/FzNUn00EOTyibV58b871');
+    }
+
+    function greeting() {
+        const currentTime = new Date();
+        const hours = currentTime.getHours();
+        if (hours >=5 && hours < 12) {
+            return 'Good morning';
+        } else if (hours >= 12 && hours < 18) {
+            return 'Good afternoon';
+        } else if (hours >= 18 && hours < 22) {
+            return 'Good evening';
+        } else {
+            return 'suh';
+        }
+    };
 
     useEffect(() => {
         (async () => {
             setIsLoaded(false);
             await dispatch(loadUserAlbums(sessionUser.id));
-            await dispatch(getLatestAlbum());
+            const response = await fetch('/api/albums/latest');
+            const album = await response.json();
+            setLatestAlbum(album.album);
             await dispatch(loadUserMediaMost(sessionUser.id));
             await dispatch(loadUserArtists(sessionUser.id))
             await dispatch(loadUserTracksMost(sessionUser.id))
@@ -54,10 +78,24 @@ export default function HomePage() {
     const tracks = useSelector(state => Object.values(state.tracks))
 
     return (
-        <div className="home-page-container">
+        <div className="home-page-container background">
             {isLoaded ? (
-                <div>
-                    <div className="tracks">
+                <div className="home-page page-load-transition">
+                    <div className="welcome-section">
+                        <p className="welcome-text">{`${greeting()}, ${sessionUser.username}`}</p>
+                    </div>
+                    <div className="featured-section l-horizontal">
+                        <div className="featured-info">
+                            <p className="featured-header">Top Medium of 2021</p>
+                            <p className="featured-medium">Haikyu!!</p>
+                            <p className="featured-link hover-pointer link-hover" onClick={featuredLink}>Go to Medium Page →</p>
+                        </div>
+                        <img className="featured-image" src="https://res.cloudinary.com/dmtj0amo0/image/upload/v1640406875/haikyuimage_fubjww.jpg" width="500px" alt="haikyu visual" />
+                    </div>
+                    <div className="home-tracks">
+                        <div className="home-tracks-heading">
+                            <p className="home-tracks-heading-text">Recently Played Tracks</p>
+                        </div>
                         <TrackContainer tracks={tracks} category={"album"} />
                     </div>
                     <div className="listings-section">

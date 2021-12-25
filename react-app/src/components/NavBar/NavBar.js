@@ -12,22 +12,15 @@ export default function NavBar() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [title, setTitle] = useState("");
   const sessionUser = useSelector(state => state.session.user);
-  const { locations, goBack, goForward } = useBrowsingHistory();
+  const { locations, goBack, goForward, nextLocation } = useBrowsingHistory();
 
-  function updateWidth() {
-    setWindowWidth(window.innerWidth)
+  function nextPath(path) {
+    nextLocation(path);
+    history.push(path);
   }
-
-  useEffect(() => {
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  });
-
   useEffect(() => {
     (async() => {
-      console.log('triggered')
       const title = await parseLocation();
-      console.log(title)
       setTitle(title);
       document.title = title;
     })();
@@ -75,13 +68,13 @@ export default function NavBar() {
   return (
     <div className="site-nav-bar l-horizontal">
       <div className="history-controls">
-        <div className="history-button" onClick={executeBack} style={stylePrev}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="history-button rounded" onClick={executeBack} style={stylePrev}>
+          <svg xmlns="http://www.w3.org/2000/svg" height="25px" width="25px" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </div>
-        <div className="history-button" onClick={executeForward} style={styleNext}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="history-button rounded" onClick={executeForward} style={styleNext}>
+          <svg xmlns="http://www.w3.org/2000/svg" height="25px" width="25px" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </div>
@@ -89,23 +82,18 @@ export default function NavBar() {
       <div className="page-title-section">
         <p className="page-title">{title}</p>
       </div>
-      <div className="dynamic-sections l-horizontal">
-        <div className="search-section">
-          Search Bar
-        </div>
-        <div className="profile-section l-horizontal">
-          <Dropdown id="profile-dropdown" title="Profile" onClick={() => history.push(`/user/${sessionUser.hashedId}`)}>
-            <Dropdown.Toggle id="profile-button" variant="success">
-              <div className="profile-button-container l-horizontal">
-                <img className="profile-button-image rounded" src={sessionUser.image} height="40px" alt="profile pic" />
-                <p className="profile-button-text">{sessionUser.username}</p>
-                <svg xmlns="http://www.w3.org/2000/svg" height="30px" width="30px" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </div>
-            </Dropdown.Toggle>
-          </Dropdown>
-        </div>
+      <div className="profile-section l-horizontal">
+        <Dropdown id="profile-dropdown" title="Profile" onClick={() => nextPath(`/user/${sessionUser.hashedId}`)}>
+          <Dropdown.Toggle id="profile-button" variant="success">
+            <div className="profile-button-container l-horizontal">
+              <img className="profile-button-image rounded" src={sessionUser.image} height="40px" alt="profile pic" />
+              <p className="profile-button-text">{sessionUser.username}</p>
+              <svg xmlns="http://www.w3.org/2000/svg" height="30px" width="30px" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </Dropdown.Toggle>
+        </Dropdown>
       </div>
     </div>
   );

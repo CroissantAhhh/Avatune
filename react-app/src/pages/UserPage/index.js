@@ -40,9 +40,9 @@ export default function UserPage() {
     const userTracks = useSelector(state => Object.values(state.tracks));
 
     return (
-        <div className="user-page-container">
+        <div className="user-page-container background">
             {isLoaded ? (
-                <div className="user-page">
+                <div className="user-page page-load-transition">
                     <div className="user-info l-horizontal">
                         <div className="user-avatar l-horizontal">
                             <img className="avatar-image shadowed rounded" src={mainUser.image} height="250px" alt="user avatar" />

@@ -9,24 +9,22 @@
 }
 
 .history-controls {
-    width: 100px;
+    width: 150px;
     display: flex;
     justify-content: space-evenly;
 }
 
 .history-button {
-    height: 30px;
-    width: 30px;
-    border: 1px solid white;
+    height: 40px;
+    width: 40px;
     background-color: black;
-    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .page-title-section {
-    width: 200px;
+    width: calc(100% - 400px);
     font-size: 2rem;
     color: white;
     font-family: Gotham;
@@ -34,20 +32,15 @@
 
 .page-title {
     margin-left: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.dynamic-sections {
-    height: 100%;
-    width: calc(100% - 300px);
-}
-
-.search-section {
-    width: 70%;
-}
 
 .profile-section {
     height: 100%;
-    width: 30%;
+    width: 250px;
 }
 
 #profile-dropdown {

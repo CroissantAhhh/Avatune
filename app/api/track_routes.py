@@ -19,6 +19,12 @@ def tracks_by_user(user_id):
     user_liked_tracks = user.user_tracks
     return { "tracks": [track.to_dict() for track in user_liked_tracks] }
 
+@track_routes.route('/byAlbum/<int:album_id>')
+@login_required
+def tracks_by_album(album_id):
+    album_tracks = Track.query.filter(Track.album_id == album_id).all()
+    return { "tracks": [track.to_dict() for track in album_tracks] }
+
 @track_routes.route('/byPlaylist/<int:playlist_id>')
 @login_required
 def tracks_by_playlist(playlist_id):

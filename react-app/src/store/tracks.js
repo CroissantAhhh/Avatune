@@ -22,6 +22,14 @@ export const loadUserTracks = (userId) => async dispatch => {
     };
 };
 
+export const loadAlbumTracks = (albumId) => async dispatch => {
+    const response = await fetch(`/api/tracks/byAlbum/${albumId}`);
+
+    if (response.ok) {
+        const tracks = await response.json();
+        dispatch(load(tracks.tracks));
+    }
+}
 export const loadUserTracksMost = (userId) => async dispatch => {
     const response = await fetch(`/api/tracks/userMost/${userId}`);
 

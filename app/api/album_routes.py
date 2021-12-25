@@ -9,10 +9,15 @@ def album_by_id(album_id):
     album = Album.query.get(album_id)
     return { "albums": album.to_dict() }
 
+@album_routes.route('/byHash/<album_hash>')
+def album_by_hash(album_hash):
+    album = Album.query.filter(Album.hashed_id == album_hash).one()
+    return { "albums": [ album.to_dict() ] }
+
 @album_routes.route('/latest')
 def latest_album():
     all_albums = Album.query.all()
-    return { "albums": all_albums[-1].to_dict() }
+    return { "album": all_albums[-1].to_dict() }
 
 @album_routes.route('/byUser/<int:user_id>')
 @login_required
@@ -29,7 +34,8 @@ def albums_by_media(medium_id):
 @album_routes.route('/byArtist/<int:artist_id>')
 @login_required
 def albums_by_artist(artist_id):
-    return { "albums": [album.to_dict() for album in Album.query.filter(Artist.query.get(artist_id) in Album.album_artists).all()] }
+    artist = Artist.query.get(artist_id)
+    return { "albums": [album.to_dict() for album in artist.artist_albums] }
 
 def terms_matched(title, search_term):
     matches = []
