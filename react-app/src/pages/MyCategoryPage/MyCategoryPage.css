@@ -1,0 +1,28 @@
+.my-categories-container {
+    height: 100%;
+    width: 100%;
+}
+
+.my-categories-page {
+    background-color: rgb(10,10,10);
+}
+
+.my-categories-header {
+    height: 100px;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.categories-header {
+    font-size: 2rem;
+    color: white;
+    font-family: Gotham;
+}
+
+.category-listings {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    gap: 30px;
+}

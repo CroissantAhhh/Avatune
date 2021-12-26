@@ -17,7 +17,8 @@ export default function NavBar() {
   function nextPath(path) {
     nextLocation(path);
     history.push(path);
-  }
+  };
+
   useEffect(() => {
     (async() => {
       const title = await parseLocation();
@@ -61,6 +62,28 @@ export default function NavBar() {
     }
     if (pathSections[0] === 'home') {
       return "Home";
+    }
+    if (pathSections[0] === 'my') {
+      switch(pathSections[1]) {
+        case 'media':
+            return 'My Media';
+            break;
+        case 'artists':
+            return 'My Artists';
+            break;
+        case 'albums':
+            return 'My Albums';
+            break;
+        case 'playlists':
+            return 'My Playlists';
+            break;
+        case 'followers':
+            return 'My Followers';
+            break;
+        case 'following':
+            return 'Following';
+            break;
+    };
     }
     return "";
   }

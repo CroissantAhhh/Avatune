@@ -45,6 +45,14 @@
     color: white;
 }
 
+.track-artist-links {
+    display: flex;
+}
+
+.artist-link ~ .artist-link::before {
+    content: ", ";
+}
+
 .track-middle-section {
     width: 45%;
 }

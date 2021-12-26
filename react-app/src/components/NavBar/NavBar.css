@@ -24,10 +24,13 @@
 }
 
 .page-title-section {
+    height: 100%;
     width: calc(100% - 400px);
     font-size: 2rem;
     color: white;
     font-family: Gotham;
+    display: flex;
+    align-items: center;
 }
 
 .page-title {
@@ -35,6 +38,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    line-height: normal;
 }
 
 

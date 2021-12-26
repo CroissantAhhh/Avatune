@@ -218,7 +218,7 @@ class Album(db.Model):
             'title': self.title,
             'image': self.image,
             'medium': { 'id': self.album_medium.id, 'title': self.album_medium.title },
-            'artists': [{ 'id': artist.id, 'title': artist.title } for artist in self.album_artists]
+            'artists': [{ 'id': artist.id, 'hashedId': artist.hashed_id, 'title': artist.title } for artist in self.album_artists]
         }
 
 # ---------------------------------------------------------------------------------------
@@ -267,10 +267,9 @@ class Track(db.Model):
             'plays': self.plays,
             'album': self.track_album.title,
             'medium': self.track_medium.title,
-            'artists': [artist.title for artist in self.track_artists],
+            'artists': [{'id': artist.id, 'hashedId': artist.hashed_id, 'title': artist.title } for artist in self.track_artists],
             'albumHash': self.track_album.hashed_id,
             'mediumHash': self.track_medium.hashed_id,
-            'artistHashes': [artist.hashed_id for artist in self.track_artists],
         }
 
 # ----------------------------------------------------------------------------

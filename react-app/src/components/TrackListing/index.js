@@ -1,16 +1,26 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import { useBrowsingHistory } from '../../context/BrowsingHistoryContext';
 
 import './TrackListing.css';
 
 
 export default function TrackListing({ track, index, category }) {
+    const history = useHistory();
     const likedSongs = useSelector(state => Object.values(state.playlists)[0].trackIds)
     const [isLiked, setIsLiked] = useState(likedSongs.includes(track.id));
+    const { nextLocation } = useBrowsingHistory();
 
     useEffect(() => {
         setIsLiked(likedSongs.includes(track.id));
     }, [likedSongs]);
+
+    function nextPath(path) {
+        nextLocation(path);
+        history.push(path);
+    }
 
     function timeElapsed(seconds) {
         if (seconds < 60) {
@@ -43,25 +53,32 @@ export default function TrackListing({ track, index, category }) {
                 <div className="track-plays track-category l-horizontal">
                     <p>{track.plays}</p>
                 </div>
-            )
+            );
+            break;
         case 'playlist':
             middleSection = (
                 <>
                     <div className="track-album track-category">
-                        <p className="track-album-title track-category">{track.album}</p>
+                        <p
+                            className="track-album-title track-category link-hover"
+                            onClick={() => nextPath(`/album/${track.albumHash}`)}>{track.album}</p>
                     </div>
                     <div className="track-date-added">
                         <p>{timeElapsed(track.dateAdded)}</p>
                     </div>
                 </>
-            )
+            );
+            break;
         case 'user':
             middleSection = (
-                <div className="track-album track-category">
-                    <p className="track-album-title track-category">{track.album}</p>
+                <div className="track-album track-category link-hover">
+                    <p
+                        className="track-album-title track-category"
+                        onClick={() => nextPath(`/album/${track.albumHash}`)}>{track.album}</p>
                 </div>
-            )
-    }
+            );
+            break;
+    };
 
     return (
         <div className="track-listing l-horizontal-spread hover-pointer">
@@ -73,7 +90,11 @@ export default function TrackListing({ track, index, category }) {
             </div>
             <div className="track-title track-category">
                 <p className="track-title-text font-normal">{track.title}</p>
-                <p className="track-artists-text">{track.artists.join(", ")}</p>
+                <div className="track-artist-links">
+                    {track.artists.map(artist => (
+                        <p className="artist-link link-hover" onClick={() => nextPath(`/artist/${artist.hashedId}`)}>{artist.title}</p>
+                    ))}
+                </div>
             </div>
             <div className="track-middle-section l-horizontal-spread track-category">
                 {middleSection}

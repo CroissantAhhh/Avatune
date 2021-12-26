@@ -19,19 +19,24 @@ export default function TrackContainer({ tracks, category }) {
                     </div>
                 </>
             );
+            break;
         case 'album':
             middleHeaders = (
                 <div className="track-heading-plays l-horizontal">
                     <p>PLAYS</p>
                 </div>
-            )
+            );
+            break;
         case 'user':
             middleHeaders = (
                 <div className="track-heading-album">
                     <p>ALBUM</p>
                 </div>
-            )
-    }
+            );
+            break;
+    };
+
+    console.log(category)
 
     return (
         <div className="track-container">

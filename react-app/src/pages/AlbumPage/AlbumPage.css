@@ -2,3 +2,42 @@
     height: 100%;
     width: 100%;
 }
+
+
+.album-header {
+    height: 400px;
+}
+
+.album-image-section {
+    height: 100%;
+    width: 35%;
+}
+
+.album-detailed-info {
+    width: 65%;
+    color: white;
+    font-family: Gotham;
+}
+
+.album-heading {
+    font-size: 1.5rem;
+}
+
+.album-title {
+    font-size: 6rem;
+    margin: 10px 0px;
+}
+
+.album-info-numbers {
+    display: flex;
+    font-size: 1.5rem;
+}
+
+.album-artist-link ~ .album-artist-link::before {
+    content: " · "
+}
+
+.album-songs-info {
+    margin-left: 5px;
+    font-family: Gotham-Book;
+}

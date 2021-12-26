@@ -6,8 +6,6 @@ import { loadUserPlaylists } from './store/playlists';
 
 import { useBrowsingHistory } from './context/BrowsingHistoryContext';
 
-import ScrollToTop from './utils/scrollToTop';
-
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import ProtectedRoute from './components/auth/ProtectedRoute';
