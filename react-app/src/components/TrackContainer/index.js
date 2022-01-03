@@ -36,8 +36,6 @@ export default function TrackContainer({ tracks, category }) {
             break;
     };
 
-    console.log(category)
-
     return (
         <div className="track-container">
             <div className="track-container-placeholder"></div>

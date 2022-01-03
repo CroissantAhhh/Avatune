@@ -92,7 +92,7 @@ export default function TrackListing({ track, index, category }) {
                 <p className="track-title-text font-normal">{track.title}</p>
                 <div className="track-artist-links">
                     {track.artists.map(artist => (
-                        <p className="artist-link link-hover" onClick={() => nextPath(`/artist/${artist.hashedId}`)}>{artist.title}</p>
+                        <p className="artist-link link-hover" key={artist.hashedId} onClick={() => nextPath(`/artist/${artist.hashedId}`)}>{artist.title}</p>
                     ))}
                 </div>
             </div>

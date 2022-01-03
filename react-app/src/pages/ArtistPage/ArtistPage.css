@@ -1,0 +1,70 @@
+.artist-page-container {
+    height: 100%;
+    width: 100%;
+}
+
+.artist-page {
+    height: 100%;
+    width: 100%;
+}
+
+.artist-info-section {
+    height: 400px;
+    background-image: linear-gradient(to bottom, rgb(1, 166, 196), rgb(20, 20, 20));
+}
+
+.artist-image-section {
+    width: 35%;
+}
+
+.artist-details {
+    width: 65%;
+    color: white;
+    font-family: Gotham;
+}
+
+.artist-heading {
+    font-size: 1.5rem;
+}
+
+.artist-name {
+    font-size: 10rem;
+    margin: 10px 0px;
+}
+
+.artist-followers {
+    font-size: 1.5rem;
+}
+
+.artist-bio-section {
+    height: 300px;
+    padding: 0px 60px;
+}
+
+.artist-bio-header {
+    color: white;
+    font-family: Gotham;
+    font-size: 3rem;
+    margin-bottom: 30px;
+}
+
+.artist-bio {
+    color: white;
+    font-family: Gotham-Book;
+    font-size: 2rem;
+}
+
+.artist-tracks-heading {
+    height: 100px;
+    background-color: rgb(20, 20, 20);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.artist-tracks-heading-text {
+    color: white;
+    font-family: Gotham;
+    font-size: 3rem;
+}

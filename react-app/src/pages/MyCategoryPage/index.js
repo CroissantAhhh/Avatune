@@ -74,7 +74,7 @@ export default function MyCategoryPage() {
                     </div>
                     <div className="category-listings">
                         {userListings.map(listing => (
-                            <GeneralListing item={listing} category={listingCategory} />
+                            <GeneralListing key={listing.hashedId} item={listing} category={listingCategory} />
                         ))}
                     </div>
                 </div>

@@ -16,8 +16,9 @@ export default function PlaylistPage() {
 
     useEffect(() => {
         (async () => {
+            setIsLoaded(false);
             await dispatch(loadPlaylistTracks(currentPlaylist?.id));
-            await setIsLoaded(true);
+            setIsLoaded(true);
         })();
     }, [playlistHash])
     // Playlist information + edit/delete controls
@@ -25,10 +26,34 @@ export default function PlaylistPage() {
 
     const tracks = useSelector(state => Object.values(state.tracks))
 
+    function totalDuration() {
+        const totalSeconds = tracks.reduce((prev, curr) => prev + curr.duration, 0);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes =  Math.floor((totalSeconds - hours * 3600) / 60);
+        const seconds = totalSeconds % 60;
+        const hoursStr = hours > 0 ? `${hours} hours ` : '';
+        const minutesStr = `${minutes} minutes `;
+        const secondsStr = seconds > 0 ? `${seconds} seconds` : '';
+        return hoursStr + minutesStr + secondsStr;
+    };
+
     return (
-        <div>
+        <div className="playlist-page-container background">
             {isLoaded && (
-                <div>
+                <div className="playlist-page page-load-transition">
+                    <div className="playlist-info l-horizontal">
+                        <div className="playlist-image-section l-horizontal">
+                            <img className="playlist-image shadowed rounded" src={currentPlaylist.image} height="250px" alt="playlist image" />
+                        </div>
+                        <div className="playlist-detailed-info">
+                            <p className="playlist-heading">Profile</p>
+                            <p className="playlist-title">{currentPlaylist.title}</p>
+                            <div className="user-info-numbers">
+                                <p className="num-playlists">{`${currentPlaylist.owner.name} Playlists · `}</p>
+                                <p className="album-songs-info">{`· ${tracks.length} songs, ${totalDuration()}`}</p>
+                            </div>
+                        </div>
+                    </div>
                     <TrackContainer tracks={tracks} category={"playlist"} />
                 </div>
             )}

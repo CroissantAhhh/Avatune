@@ -9,6 +9,11 @@ def artist_by_id(artist_id):
     artist = Artist.query.get(artist_id)
     return { "artists": artist.to_dict() }
 
+@artist_routes.route('/byHash/<artist_hash>')
+def artist_by_hash(artist_hash):
+    artist = Artist.query.filter(Artist.hashed_id == artist_hash).one()
+    return { "artists": [ artist.to_dict() ] }
+
 
 @artist_routes.route('/byUser/<int:user_id>')
 @login_required

@@ -94,9 +94,9 @@ def medium_most_played(medium_id):
 
 @track_routes.route('/artistMost/<int:artist_id>')
 def artist_most_played(artist_id):
-    artist_most = Track.query.filter(Artist.query.get(artist_id) in Track.track_artists).all()
-    artist_most.sort(reverse=True, key=lambda x: x.plays)
-    return { "tracks": [track.to_dict() for track in artist_most[0:10]] }
+    artist_tracks = Artist.query.get(artist_id).artist_tracks
+    artist_tracks.sort(reverse=True, key=lambda x: x.plays)
+    return { "tracks": [track.to_dict() for track in artist_tracks[0:10]] }
 
 @track_routes.route('/playTrack/<int:user_id>/<int:track_id>', methods=['POST'])
 def play_track(user_id, track_id):

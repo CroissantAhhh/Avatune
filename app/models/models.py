@@ -178,7 +178,8 @@ class Artist(db.Model):
             'hashedId': self.hashed_id,
             'title': self.title,
             'image': self.image,
-            'bio': self.bio
+            'bio': self.bio,
+            'numFollowers': len(self.artist_users),
         }
 
 # --------------------------------------------------------------------------------
@@ -308,7 +309,7 @@ class Playlist(db.Model):
             'hashedId': self.hashed_id,
             'title': self.title,
             'image': self.image,
-            'userId': self.user_id,
+            'owner': {'id': self.playlist_user.id, 'name': self.playlist_user.username },
             'trackIds': self.playlist_tracks()
         }
 

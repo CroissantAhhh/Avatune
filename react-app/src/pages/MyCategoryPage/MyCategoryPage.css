@@ -5,6 +5,7 @@
 
 .my-categories-page {
     background-color: rgb(10,10,10);
+    width: 100%;
 }
 
 .my-categories-header {
@@ -15,7 +16,7 @@
 }
 
 .categories-header {
-    font-size: 2rem;
+    font-size: 3rem;
     color: white;
     font-family: Gotham;
 }

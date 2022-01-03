@@ -22,6 +22,16 @@ export const loadUserArtists = (userId) => async dispatch => {
     };
 };
 
+export const loadArtistByHash = (artistHash) => async dispatch => {
+    const response = await fetch(`/api/artists/byHash/${artistHash}`);
+
+    if (response.ok) {
+        const artists = await response.json();
+        dispatch(load(artists.artists));
+        return artists.artists[0].id;
+    };
+}
+
 const artistReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD:
