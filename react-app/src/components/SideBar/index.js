@@ -26,8 +26,8 @@ export default function SideBar() {
 
     const myPlaylists = useSelector(state => Object.values(state.playlists));
     const sessionUser = useSelector(state => state.session.user);
-    const ownPlaylists = myPlaylists.filter(playlist => playlist.userId === sessionUser.id);
-    const followedPlaylists = myPlaylists.filter(playlist => playlist.userId !== sessionUser.id);
+    const ownPlaylists = myPlaylists.filter(playlist => playlist.owner.id === sessionUser.id);
+    const followedPlaylists = myPlaylists.filter(playlist => playlist.owner.id !== sessionUser.id);
 
     useEffect(() => {
         setCurrentURL(location.pathname);
@@ -103,7 +103,7 @@ export default function SideBar() {
                 <div className="side-bar-nav l-horizontal hover-pointer">
                     <div
                         className="side-bar-nav-content l-horizontal"
-                        onClick={() => nextPath(`/playlist/${ownPlaylists[0].hashedId}`)}>
+                        onClick={() => nextPath(`/playlist/${ownPlaylists[0]?.hashedId}`)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                         </svg>

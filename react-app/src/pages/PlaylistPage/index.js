@@ -7,6 +7,8 @@ import { loadPlaylistTracks } from '../../store/tracks';
 import TrackContainer from '../../components/TrackContainer';
 import TrackListing from '../../components/TrackListing';
 
+import './PlaylistPage.css';
+
 export default function PlaylistPage() {
     const dispatch = useDispatch();
     const { playlistHash } = useParams();
@@ -41,16 +43,16 @@ export default function PlaylistPage() {
         <div className="playlist-page-container background">
             {isLoaded && (
                 <div className="playlist-page page-load-transition">
-                    <div className="playlist-info l-horizontal">
+                    <div className="playlist-header l-horizontal">
                         <div className="playlist-image-section l-horizontal">
                             <img className="playlist-image shadowed rounded" src={currentPlaylist.image} height="250px" alt="playlist image" />
                         </div>
                         <div className="playlist-detailed-info">
-                            <p className="playlist-heading">Profile</p>
+                            <p className="playlist-heading">Playlist</p>
                             <p className="playlist-title">{currentPlaylist.title}</p>
                             <div className="user-info-numbers">
-                                <p className="num-playlists">{`${currentPlaylist.owner.name} Playlists · `}</p>
-                                <p className="album-songs-info">{`· ${tracks.length} songs, ${totalDuration()}`}</p>
+                                <p className="num-playlists">{`${currentPlaylist.owner.name}`}</p>
+                                <p className="album-songs-info">{`${tracks.length} songs`}</p>
                             </div>
                         </div>
                     </div>

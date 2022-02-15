@@ -23,7 +23,11 @@ import './HomePage.css'
 // - Media: 5 of user's followed (random, most played), "see all" links to all of user's followed media
 // - Artists: 5 of users's followed (random, most played), "see all" links to all of user's followed artists
 // - Tracks: 5 of user's most recently listened to songs
-
+// - The home page will store all of the users's
+// Details more to come after next patch
+// How will we export these details later on, we have yet to see
+// Shuffle functionality is done using stack surprisingly
+//
 export default function HomePage() {
     // Newly Released Album Section
     // Your Playlists
@@ -41,7 +45,7 @@ export default function HomePage() {
     function featuredLink() {
         nextLocation('/medium/FzNUn00EOTyibV58b871');
         history.push('/medium/FzNUn00EOTyibV58b871');
-    }
+    };
 
     function greeting() {
         const currentTime = new Date();

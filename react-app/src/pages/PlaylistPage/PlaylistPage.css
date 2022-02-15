@@ -1,0 +1,38 @@
+.playlist-page-container {
+    height: 100%;
+    width: 100%;
+}
+
+.playlist-header {
+    height: 400px;
+}
+
+.playlist-image-section {
+    height: 100%;
+    width: 35%;
+}
+
+.playlist-detailed-info {
+    width: 65%;
+    color: white;
+    font-family: Gotham;
+}
+
+.playlist-heading {
+    font-size: 1.5rem;
+}
+
+.playlist-title {
+    font-size: 6rem;
+    margin: 10px 0px;
+}
+
+.playlist-info-numbers {
+    display: flex;
+    font-size: 1.5rem;
+}
+
+.playlist-songs-info {
+    margin-left: 5px;
+    font-family: Gotham-Book;
+}
