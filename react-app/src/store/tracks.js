@@ -29,7 +29,8 @@ export const loadAlbumTracks = (albumId) => async dispatch => {
         const tracks = await response.json();
         dispatch(load(tracks.tracks));
     }
-}
+};
+
 export const loadUserTracksMost = (userId) => async dispatch => {
     const response = await fetch(`/api/tracks/userMost/${userId}`);
 
@@ -38,6 +39,15 @@ export const loadUserTracksMost = (userId) => async dispatch => {
         dispatch(load(tracks.tracks));
     };
 };
+
+export const loadArtistTracksMost = (artistId) => async dispatch => {
+    const response = await fetch(`/api/tracks/artistMost/${artistId}`);
+
+    if (response.ok) {
+        const tracks = await response.json();
+        dispatch(load(tracks.tracks));
+    };
+}
 
 export const loadUserTracksRecent = (userId) => async dispatch => {
     const response = await fetch(`/api/tracks/userRecent/${userId}`);

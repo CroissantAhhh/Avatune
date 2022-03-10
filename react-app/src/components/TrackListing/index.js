@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useBrowsingHistory } from '../../context/BrowsingHistoryContext';
+import { useCurrentSongs } from '../../context/CurrentSongsContext';
 
 import './TrackListing.css';
 
@@ -12,6 +13,15 @@ export default function TrackListing({ track, index, category }) {
     const likedSongs = useSelector(state => Object.values(state.playlists)[0].trackIds)
     const [isLiked, setIsLiked] = useState(likedSongs.includes(track.id));
     const { nextLocation } = useBrowsingHistory();
+    const { currentSongs, setCurrentSongs, injectSongs } = useCurrentSongs();
+    const tracks = useSelector(state => Object.values(state.tracks));
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    useEffect(() => {
+        if (currentSongs.songList.length) {
+            setIsPlaying(track.id === currentSongs.songList[currentSongs.currentPosition].id);
+        }
+    }, [currentSongs.songList[currentSongs.currentPosition]?.id])
 
     useEffect(() => {
         setIsLiked(likedSongs.includes(track.id));
@@ -20,6 +30,10 @@ export default function TrackListing({ track, index, category }) {
     function nextPath(path) {
         nextLocation(path);
         history.push(path);
+    }
+
+    function play() {
+        injectSongs(tracks, index - 1, currentSongs.isShuffle)
     }
 
     function timeElapsed(seconds) {
@@ -81,7 +95,10 @@ export default function TrackListing({ track, index, category }) {
     };
 
     return (
-        <div className="track-listing l-horizontal-spread hover-pointer">
+        <div
+            className="track-listing l-horizontal-spread hover-pointer"
+            onDoubleClick={play}
+            style={isPlaying ? {backgroundColor: "rgb(56, 56, 56)", color: "white"} : {}}>
             <div className="track-index track-category l-horizontal">
                 <p>{index}</p>
             </div>
@@ -89,7 +106,9 @@ export default function TrackListing({ track, index, category }) {
                 <img src={track.image} alt="track artwork" height="40px" width="40px" />
             </div>
             <div className="track-title track-category">
-                <p className="track-title-text font-normal">{track.title}</p>
+                <p
+                    className="track-title-text font-normal"
+                    style={isPlaying ? {color: "rgb(1, 166, 196)"} : {}}>{track.title}</p>
                 <div className="track-artist-links">
                     {track.artists.map(artist => (
                         <p className="artist-link link-hover" key={artist.hashedId} onClick={() => nextPath(`/artist/${artist.hashedId}`)}>{artist.title}</p>

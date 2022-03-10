@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { loadArtistByHash } from '../../store/artists';
+import { loadArtistTracksMost } from '../../store/tracks';
 
 import TrackContainer from '../../components/TrackContainer';
 import GeneralListingContainer from '../../components/GeneralListingContainer';
@@ -15,16 +16,13 @@ export default function ArtistPage() {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const { artistHash } = useParams();
-    const [artistTracks, setArtistTracks] = useState();
     const [artistAlbums, setArtistAlbums] = useState();
 
     useEffect(() => {
         (async() => {
             setIsLoaded(false);
             const artistId = await dispatch(loadArtistByHash(artistHash));
-            const response1 = await fetch(`/api/tracks/artistMost/${artistId}`);
-            const tracks = await response1.json();
-            setArtistTracks(tracks.tracks);
+            await dispatch(loadArtistTracksMost(artistId));
             const response2 = await fetch(`/api/albums/byArtist/${artistId}`);
             const albums = await response2.json();
             setArtistAlbums(albums.albums);
@@ -33,6 +31,7 @@ export default function ArtistPage() {
     }, [dispatch, artistHash]);
 
     const currentArtist = useSelector(state => Object.values(state.artists))[0];
+    const artistTracks = useSelector(state => Object.values(state.tracks));
     // Artist information
 
     // Most played tracks section

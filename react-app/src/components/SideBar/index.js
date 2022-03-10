@@ -58,6 +58,17 @@ export default function SideBar() {
                 <div className="side-bar-nav l-horizontal hover-pointer">
                     <div
                         className="side-bar-nav-content l-horizontal"
+                        style={{ backgroundColor: currentURL.includes("/search") ? "grey" : "black" }}
+                        onClick={() => nextPath('/search')}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <p className="side-bar-nav-label font-normal">Search</p>
+                    </div>
+                </div>
+                <div className="side-bar-nav l-horizontal hover-pointer">
+                    <div
+                        className="side-bar-nav-content l-horizontal"
                         style={{ backgroundColor: currentURL.includes("/my/media") ? "grey" : "black" }}
                         onClick={() => nextPath('/my/media')}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

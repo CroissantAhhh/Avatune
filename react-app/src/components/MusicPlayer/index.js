@@ -44,15 +44,15 @@ export default function MusicPlayer() {
         <div className="song-player-bar-container">
             <div className="song-player-bar">
                 <div className="song-info">
-                    <img src={currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.trackImageURL ? currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.trackImageURL : "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633904027/f191a4786289ade562884722ef784cff_byy82e.jpg"} alt="track artwork" height="100px" width="100px"></img>
+                    <img src={currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.image ? currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.image : "https://res.cloudinary.com/dmtj0amo0/image/upload/v1633904027/f191a4786289ade562884722ef784cff_byy82e.jpg"} alt="track artwork" height="100px" width="100px"></img>
                     <div className="song-text-info">
-                        <h2 className="song-text-track">{currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.name}</h2>
-                        <h2 className="song-text-media">{currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.medium?.name}</h2>
+                        <h2 className="song-text-track">{currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.title}</h2>
+                        <h2 className="song-text-media">{currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.medium}</h2>
                     </div>
                 </div>
                 <AudioPlayer
                 autoPlay
-                src={currentSongs?.currentPosition >= 0 && currentSongs?.currentPosition < currentSongs?.songList?.length ? currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.fileURL : "" }
+                src={currentSongs?.currentPosition >= 0 && currentSongs?.currentPosition < currentSongs?.songList?.length ? currentSongs?.songList[currentSongs?.playOrder[currentSongs?.currentPosition]]?.trackFile : "" }
                 showSkipControls={true}
                 onClickPrevious={previous}
                 onClickNext={next}

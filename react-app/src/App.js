@@ -18,6 +18,7 @@ import FollowersPage from './pages/FollowersPage';
 import FollowingPage from './pages/FollowingPage';
 import MediumPage from './pages/MediumPage';
 import PlaylistPage from './pages/PlaylistPage';
+import SearchPage from './pages/SearchPage';
 import SearchResultsPage from './pages/SearchResultsPage';
 import SpecificResultsPage from './pages/SpecificResultsPage';
 import SplashPage from './pages/SplashPage';
@@ -79,6 +80,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute path='/playlist/:playlistHash'>
             <PageContainer page={<PlaylistPage />} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/search' exact={true}>
+            <PageContainer page={<SearchPage />} />
           </ProtectedRoute>
           <ProtectedRoute path='/search/:searchQuery' exact={true}>
             <PageContainer page={<SearchResultsPage />} />
